@@ -1,0 +1,15 @@
+views/accomodation
+views/customer
+views/qrcode
+views/pages/aboutus
+views/pages/activity
+views/pages/announcement
+views/pages/booking
+views/pages/feedback_form
+views/pages/survey
+views/pages/volunteer
+
+views/layouts/navbars/navs/auth.blade_copy.php
+views/layouts/app-auth.blade.php
+views/layouts/app.blade_copy.php
+views/layouts/page_templates/auth.blade_copy.php

@@ -1,0 +1,32 @@
+/* Login form */
+.login-form{
+    width: 30%;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width:750px) {
+    .login-form{
+        width: 50%;
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.logo img {
+    max-width: 150px;
+}
+
+.time-attendance-form{
+    left: 20% !important;
+}
+
+.time-attendance-page{
+    padding-top: 50px;
+}
