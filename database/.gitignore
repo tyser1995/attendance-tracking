@@ -1,1 +1,4 @@
 *.sqlite*
+
+# Ignore selected seeders
+seeders/AccomodationTableSeeder.php
