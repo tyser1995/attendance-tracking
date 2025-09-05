@@ -21,26 +21,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-12">
-                    @if (session('status'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session('status') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    @endif
-                </div>
-                <div class="col-12">
-                    @if (session('error'))
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {{ session('error') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    @endif
-                </div>
+                @include('notification.index')
                 <div class="card-body">
                     <div class="table-responsive-sm">
                         <table id="tblUser" class="table">
@@ -106,13 +87,6 @@
 @push('scripts')
 <script>
 $(document).ready(function() {
-    $('#tblUser').DataTable({
-        order: [
-            [0, 'asc']
-        ]
-    });
-
-
     $('#tblUser tbody').on('click','.btnCanDestroy',function() {
             Swal.fire({
                 // title: 'Error!',

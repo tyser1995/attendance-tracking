@@ -1,23 +1,26 @@
-{{-- @if (session()->has('status'))
-<div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
-    {{ session('status') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
+<div class="col-12">
+    @if (session('status'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('status') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+    </div>
+    <div class="col-12">
+    @if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
 </div>
-@endif
-
-@if (session()->has('error'))
-<div class="alert alert-danger alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
-    {{ session('error') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-@endif --}}
 
 {{-- SweetAlert --}}
-@push('scripts')
+{{-- @push('scripts')
 @if(session('status'))
 <script>
     Swal.fire({
@@ -53,4 +56,4 @@
     });
 </script>
 @endif
-@endpush
+@endpush --}}
