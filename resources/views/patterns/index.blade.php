@@ -14,7 +14,7 @@
                             <div class="col-8">
                                 <h3 class="mb-0 h3_title">ID Pattern</h3>
                             </div>
-                            <div class="col-4 text-right add-region-btn">
+                            <div class="col-4 text-right add-region-btn d-none">
                                 <a href="{{ route('pattern.create') }}" class="btn btn-sm btn-primary"
                                     id="add-region-btn">{{ __('Add ID Pattern') }}</a>
                             </div>
@@ -22,6 +22,17 @@
                     </div>
                    <div class="card-body">
                         @include('notification.index')
+                        <form method="post" action="{{ route('pattern.store') }}" enctype="multipart/form-data" autocomplete="off">
+                            @csrf
+                            <input type="hidden" name="created_by_users_id" value="{{ Auth::user()->id }}" class="form-control form-control-alternative">
+                            <div class="input-group">
+                              <input type="text" name="pattern" class="form-control" placeholder="e.g. ##-E###-##" required>
+                            </div>
+                            <span class="input-group-append">
+                                <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                            </span>
+                        </form>
+                        <hr class="my-4">
                         <ul class="list-group">
                             @foreach($patterns as $p)
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -40,15 +51,14 @@
                             @endforeach
                         </ul>
 
-                        <hr class="my-4">
-                        <h2>Validate an ID</h2>
-                        <form action="{{ route('validate-id') }}" method="POST">
+                        <hr class="my-4 d-none">
+                        <h2 hidden>Validate an ID</h2>
+                        <form action="{{ route('validate-id') }}" method="POST" class="d-none">
                             @csrf
                             <input type="text" name="id" placeholder="Enter ID" required class="form-control"
                                 style="width: 300px; display: inline-block; margin-right: 10px;">
                             <button type="submit" class="btn btn-primary">Validate</button>
                         </form>
-                        @include('notification.index')
                     </div>
                 </div>
             </div>
@@ -71,13 +81,13 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 document.getElementById('delete-form-' + id).submit();
-                 Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: "Deleted successfully",
-                    timer: 3000,
-                    showConfirmButton: false
-                });
+                //  Swal.fire({
+                //     icon: 'success',
+                //     title: 'Success',
+                //     text: "Deleted successfully",
+                //     timer: 3000,
+                //     showConfirmButton: false
+                // });
             }
         })
     }

@@ -1,4 +1,4 @@
-@if (session()->has('status'))
+{{-- @if (session()->has('status'))
 <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
     {{ session('status') }}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -14,10 +14,11 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-@endif
+@endif --}}
 
 {{-- SweetAlert --}}
-{{-- @if(session('status'))
+@push('scripts')
+@if(session('status'))
 <script>
     Swal.fire({
         icon: 'success',
@@ -39,4 +40,17 @@
         showConfirmButton: false
     });
 </script>
-@endif --}}
+@endif
+
+@if(session('warning'))
+<script>
+    Swal.fire({
+        icon: 'warning',
+        title: 'Warning',
+        text: "{{ session('warning') }}",
+        timer: 3000,
+        showConfirmButton: false
+    });
+</script>
+@endif
+@endpush

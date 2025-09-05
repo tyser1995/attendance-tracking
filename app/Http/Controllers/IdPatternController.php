@@ -36,15 +36,28 @@ class IdPatternController extends Controller
         // Wrap with anchors
         $regex = '/^' . $regex . '$/';
 
+        // ✅ Check if pattern OR regex already exists
+        $exists = IdPattern::where('pattern', $request->pattern)
+            ->orWhere('regex', $regex)
+            ->exists();
+
+        if ($exists) {
+            return redirect()
+                ->route('patterns')
+                ->with('warning', '⚠️ Pattern already exists!');
+        }
+
+        // Insert if unique
         IdPattern::create([
             'pattern' => $request->pattern,
             'regex'   => $regex,
         ]);
 
         return redirect()
-    ->route('patterns')
-    ->with('status', 'Pattern added successfully!');
+            ->route('patterns')
+            ->with('status', '✅ Pattern added successfully!');
     }
+
 
 
     // Validate a given ID
