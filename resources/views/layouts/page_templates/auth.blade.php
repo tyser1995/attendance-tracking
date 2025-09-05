@@ -49,6 +49,29 @@
 					</p>
 					</a>
 				</li>
+        <li class="nav-item {{ $elementActive == 'user' || $elementActive == 'roles' ? 'menu-open' : '' }}">
+					<a href="#" class="nav-link">
+					<i class="nav-icon fas fa-user-cog"></i>
+					<p>
+						User Management
+						<i class="right fas fa-angle-left"></i>
+					</p>
+					</a>
+					<ul class="nav nav-treeview">
+						<li class="nav-item">
+							<a href="{{ route('users') }}" class="nav-link {{ $elementActive == 'user' ? 'active' : '' }}">
+							<i class="far fa-circle nav-icon"></i>
+							<p>User</p>
+							</a>
+						</li>
+            <li class="nav-item">
+							<a href="{{ route('roles') }}" class="nav-link {{ $elementActive == 'roles' ? 'active' : '' }}">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Roles</p>
+							</a>
+						</li>
+					</ul>
+				</li>
 				<li class="nav-item {{ $elementActive == 'pattern' ? 'menu-open' : '' }}">
 					<a href="#" class="nav-link">
 					<i class="nav-icon fas fa-cogs"></i>

@@ -70,6 +70,8 @@ The above copyright notice and this permission notice shall be included in all c
 	<link rel="stylesheet" href="{{asset('/')}}css/global.css"> 
 
     <!-- {{-- <link rel="stylesheet" href="{{asset('adminlte')}}/css/demo.css"> --}} -->
+	<!-- Toastr -->
+  	<link rel="stylesheet" href="{{ asset('adminlte') }}/plugins/toastr/toastr.min.css">
 
     <!-- CSS -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/css/smart_wizard_all.min.css" rel="stylesheet" type="text/css" /> -->
@@ -143,7 +145,8 @@ The above copyright notice and this permission notice shall be included in all c
 	<script src="{{asset('adminlte')}}/js/pages/dashboard.js"></script>
 
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+	<!-- Toastr -->
+    <script src="{{ asset('adminlte') }}/plugins/toastr/toastr.min.js"></script>
 	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 	<script>
 		 var base_url = "{{ url('/') }}";
