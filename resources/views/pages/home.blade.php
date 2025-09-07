@@ -39,11 +39,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- 
+                                
                                 @forelse($logs as $log)
                                     <tr>
-                                        <td>{{ $log->user->id_number }}</td>
-                                        <td>{{ $log->user->name }}</td>
+                                        <td>{{ $log->id_number }}</td>
+                                        <td>{{ $log->name }}</td>
                                         <td>{{ \Carbon\Carbon::parse($log->created_at)->format('M d, Y h:i:s A') }}</td>
                                     </tr>
                                 @empty
@@ -51,7 +51,7 @@
                                         <td colspan="3">No logs found</td>
                                     </tr>
                                 @endforelse
-                                --}}
+                               
                             </tbody>
                         </table>
                     </div>

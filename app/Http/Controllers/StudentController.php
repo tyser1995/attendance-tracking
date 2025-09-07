@@ -49,7 +49,7 @@ class StudentController extends Controller
             'ln'       => 'required|string|max:255',
             'mn'       => 'nullable|string|max:255',
             'dob'      => 'required|date',
-            'sex'      => 'required|in:Male,Female',
+            'sex'      => 'required|in:M,F',
         ]);
 
         if ($validator->fails()) {

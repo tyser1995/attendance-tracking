@@ -52,8 +52,8 @@
                                 <label>Sex</label>
                                 <select name="sex" class="form-control" required class="form-control" >
                                    <option value="">-- Select Sex --</option>
-                                    <option value="Male" {{ old('sex') == 'Male' ? 'selected' : '' }}>Male</option>
-                                    <option value="Female" {{ old('sex') == 'Female' ? 'selected' : '' }}>Female</option>
+                                    <option value="M" {{ old('sex') == 'M' ? 'selected' : '' }}>Male</option>
+                                    <option value="F" {{ old('sex') == 'F' ? 'selected' : '' }}>Female</option>
                                 </select>
                             </div>
 

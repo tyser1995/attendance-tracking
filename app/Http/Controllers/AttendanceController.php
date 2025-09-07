@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Attendance;
 use App\Models\IdPattern;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
@@ -19,7 +20,6 @@ class AttendanceController extends Controller
 
         $idnumber = $request->idnumber;
 
-        // ✅ Step 1: Validate ID against saved patterns
         $patterns = IdPattern::all();
         $isValid = false;
 
@@ -37,7 +37,16 @@ class AttendanceController extends Controller
             ]);
         }
 
-        // ✅ Step 2: Proceed with attendance logging
+        // Verify if student exists
+        $student = Student::where('idnumber', $idnumber)->first();
+
+        if (! $student) {
+            return response()->json([
+                'success' => false,
+                'message' => "❌ No student account found with ID '{$idnumber}'.",
+            ]);
+        }
+
         $name = "Employee " . $idnumber;
 
         $logsToday = Attendance::where('idnumber', $idnumber)
@@ -55,7 +64,7 @@ class AttendanceController extends Controller
 
         $attendance = Attendance::logAttendance(
             $idnumber,
-            $name,
+            $student->fn . ' ' . $student->ln,
             $nextStatus
         );
 
