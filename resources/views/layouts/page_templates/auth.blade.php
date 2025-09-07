@@ -49,7 +49,7 @@
 					</p>
 					</a>
 				</li>
-        <li class="nav-item {{ $elementActive == 'user' || $elementActive == 'roles' ? 'menu-open' : '' }}">
+        <li class="nav-item {{ $elementActive == 'user' || $elementActive == 'roles' || $elementActive == 'student' ? 'menu-open' : '' }}">
 					<a href="#" class="nav-link">
 					<i class="nav-icon fas fa-user-cog"></i>
 					<p>
@@ -68,6 +68,12 @@
 							<a href="{{ route('roles') }}" class="nav-link {{ $elementActive == 'roles' ? 'active' : '' }}">
 							<i class="far fa-circle nav-icon"></i>
 							<p>Roles</p>
+							</a>
+						</li>
+            <li class="nav-item">
+							<a href="{{ route('students') }}" class="nav-link {{ $elementActive == 'student' ? 'active' : '' }}">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Student</p>
 							</a>
 						</li>
 					</ul>
@@ -106,7 +112,6 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->

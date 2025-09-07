@@ -103,6 +103,11 @@ Route::group(['middleware' => 'auth'], function () {
      return redirect()->route('patterns')->with('status', '✅ Session works now!');
 });
 
+    //Student
+    Route::get('students', ['as' => 'students', 'uses' => 'App\Http\Controllers\StudentController@index']);
+    Route::get('students/delete/{id}', ['as' => 'students/delete/{id}', 'uses' => 'App\Http\Controllers\StudentController@delete']);
+	Route::resource('student', 'App\Http\Controllers\StudentController');
+    
     //User Management
     Route::get('employees', ['as' => 'employees', 'uses' => 'App\Http\Controllers\EmployeeController@index']);
     Route::get('employees/delete/{id}', ['as' => 'employees/delete/{id}', 'uses' => 'App\Http\Controllers\EmployeeController@delete']);
