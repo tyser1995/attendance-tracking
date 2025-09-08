@@ -134,7 +134,7 @@ class StudentController extends Controller
         $student->save();
 
         return redirect()
-            ->route('students.index')
+            ->route('student.index')
             ->with('status', 'Student updated successfully!');
     }
 
