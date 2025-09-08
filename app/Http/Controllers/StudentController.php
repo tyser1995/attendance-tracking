@@ -93,7 +93,8 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $student = Student::findOrFail($id);
+        return view('students.edit', compact('student'));
     }
 
     /**
@@ -105,7 +106,36 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         $student = Student::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'idnumber' => 'required|unique:students,idnumber,' . $student->id, // ✅ ignore current student
+            'fn'       => 'required|string|max:255',
+            'ln'       => 'required|string|max:255',
+            'mn'       => 'nullable|string|max:255',
+            'dob'      => 'required|date',
+            'sex'      => 'required|in:M,F',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', $validator->errors()->first());
+        }
+
+        $student->idnumber = $request->idnumber;
+        $student->fn       = $request->fn;
+        $student->ln       = $request->ln;
+        $student->mn       = $request->mn;
+        $student->dob      = $request->dob;
+        $student->sex      = $request->sex;
+        $student->save();
+
+        return redirect()
+            ->route('students.index')
+            ->with('status', 'Student updated successfully!');
     }
 
     /**
