@@ -20,22 +20,22 @@ class AttendanceController extends Controller
 
         $idnumber = $request->idnumber;
 
-        $patterns = IdPattern::all();
-        $isValid = false;
+        // $patterns = IdPattern::all();
+        // $isValid = false;
 
-        foreach ($patterns as $pattern) {
-            if (preg_match($pattern->regex, $idnumber)) {
-                $isValid = true;
-                break;
-            }
-        }
+        // foreach ($patterns as $pattern) {
+        //     if (preg_match($pattern->regex, $idnumber)) {
+        //         $isValid = true;
+        //         break;
+        //     }
+        // }
 
-        if (! $isValid) {
-            return response()->json([
-                'success' => false,
-                'message' => "❌ ID '{$idnumber}' does not match any allowed pattern.",
-            ]);
-        }
+        // if (! $isValid) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => "❌ ID '{$idnumber}' does not match any allowed pattern.",
+        //     ]);
+        // }
 
         // Verify if student exists
         $student = Student::where('idnumber', $idnumber)->first();
