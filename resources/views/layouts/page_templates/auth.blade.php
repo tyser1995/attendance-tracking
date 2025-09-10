@@ -73,7 +73,7 @@
             <li class="nav-item">
 							<a href="{{ route('students') }}" class="nav-link {{ $elementActive == 'student' ? 'active' : '' }}">
 							<i class="far fa-circle nav-icon"></i>
-							<p>Student</p>
+							<p>Account Login</p>
 							</a>
 						</li>
 					</ul>

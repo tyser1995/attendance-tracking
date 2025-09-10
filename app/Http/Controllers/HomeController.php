@@ -1,10 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\ActivityHeader;
-use App\Models\ActivityList;
-use App\Models\AnnouncementModel;
-use App\Models\Accomodation;
 use App\Models\IdPattern; 
 use App\Models\Attendance; 
 
@@ -32,10 +28,8 @@ class HomeController extends Controller
 
         $logs = Attendance::where('created_date', today())->get();
         return view('pages.home',[
-            'headers' => ActivityHeader::getActivityHeader(),
-            'lists' => ActivityList::getActivityList(),
-            'announcements' => AnnouncementModel::getAnnouncement(),
-            'events' => AnnouncementModel::getAnnouncement(),
+            'announcements' => null,
+            'events' => null,
             'patterns' => IdPattern::all(),
             'logs' => $logs
         ]);
