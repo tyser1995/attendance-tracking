@@ -103,6 +103,16 @@ Route::group(['middleware' => 'auth'], function () {
      return redirect()->route('patterns')->with('status', '✅ Session works now!');
 });
 
+    //Time Management
+    Route::get('attendance_managements', ['as' => 'attendance_managements', 'uses' => 'App\Http\Controllers\AttendanceController@index']);
+    Route::get('attendance_managements/delete/{id}', ['as' => 'attendance_managements/delete/{id}', 'uses' => 'App\Http\Controllers\AttendanceController@delete']);
+	Route::resource('attendance_management', 'App\Http\Controllers\AttendanceController');
+
+    //Course and Year
+    Route::get('courses', ['as' => 'courses', 'uses' => 'App\Http\Controllers\CourseController@index']);
+    Route::get('courses/delete/{id}', ['as' => 'courses/delete/{id}', 'uses' => 'App\Http\Controllers\CourseController@delete']);
+	Route::resource('course', 'App\Http\Controllers\CourseController');
+
     //Student
     Route::get('students', ['as' => 'students', 'uses' => 'App\Http\Controllers\StudentController@index']);
     Route::get('students/delete/{id}', ['as' => 'students/delete/{id}', 'uses' => 'App\Http\Controllers\StudentController@delete']);

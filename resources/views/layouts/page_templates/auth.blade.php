@@ -45,7 +45,7 @@
 					<i class="nav-icon fas fa-door-open"></i>
 					<p>
 						Logout
-						<i class="right fas fa-running"></i>
+						<i class="right fas fa-running d-none"></i>
 					</p>
 					</a>
 				</li>
@@ -74,6 +74,32 @@
 							<a href="{{ route('students') }}" class="nav-link {{ $elementActive == 'student' ? 'active' : '' }}">
 							<i class="far fa-circle nav-icon"></i>
 							<p>Account Login</p>
+							</a>
+						</li>
+					</ul>
+				</li>
+        <li class="nav-item">
+					<a href="{{ route('courses') }}" class="nav-link {{ $elementActive == 'course' ? 'active' : '' }}">
+					<i class="nav-icon fas fa-book"></i>
+					<p>
+						Course Management
+						<i class="right fas fa-graduation-cap d-none"></i>
+					</p>
+					</a>
+				</li>
+        <li class="nav-item {{ $elementActive == 'attendance' ? 'menu-open' : '' }}">
+					<a href="#" class="nav-link">
+					<i class="nav-icon fas fa-clock"></i>
+					<p>
+						Time Management
+						<i class="right fas fa-angle-left"></i>
+					</p>
+					</a>
+					<ul class="nav nav-treeview">
+						<li class="nav-item">
+						<a href="{{ route('attendance_managements') }}" class="nav-link {{ $elementActive == 'attendance' ? 'active' : '' }}">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Logs</p>
 							</a>
 						</li>
 					</ul>

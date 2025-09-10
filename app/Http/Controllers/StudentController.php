@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Models\Student;
+use App\Models\Course;
 
 use Illuminate\Support\Facades\Validator;
 class StudentController extends Controller
@@ -18,7 +19,7 @@ class StudentController extends Controller
     {
         //
         return view('students.index', [
-            'students' => Student::all()
+            'students' => Student::with('course')->get()
         ]);
     }
 
@@ -31,7 +32,8 @@ class StudentController extends Controller
     {
         $roles = Role::pluck('name','id')->all();
         return view('students.create', [
-            'roles' => $roles
+            'roles' => $roles,
+            'courses' => \App\Models\Course::all()
         ]);
     }
 
@@ -50,6 +52,7 @@ class StudentController extends Controller
             'mn'       => 'nullable|string|max:255',
             'dob'      => 'required|date',
             'sex'      => 'required|in:M,F',
+            'course_id' => 'required|exists:courses,id',
         ]);
 
         if ($validator->fails()) {
@@ -67,6 +70,7 @@ class StudentController extends Controller
         $student->mn       = $request->mn;
         $student->dob      = $request->dob;
         $student->sex      = $request->sex;
+        $student->course_id = $request->course_id;
         $student->save();
 
         return redirect()
@@ -94,7 +98,8 @@ class StudentController extends Controller
     public function edit($id)
     {
         $student = Student::findOrFail($id);
-        return view('students.edit', compact('student'));
+        $courses = Course::all();
+        return view('students.edit', compact('student', 'courses'));
     }
 
     /**
@@ -115,6 +120,7 @@ class StudentController extends Controller
             'mn'       => 'nullable|string|max:255',
             'dob'      => 'required|date',
             'sex'      => 'required|in:M,F',
+            'course_id' => 'required|exists:courses,id',
         ]);
 
         if ($validator->fails()) {
@@ -131,6 +137,7 @@ class StudentController extends Controller
         $student->mn       = $request->mn;
         $student->dob      = $request->dob;
         $student->sex      = $request->sex;
+        $student->course_id = $request->course_id;
         $student->save();
 
         return redirect()

@@ -1,6 +1,6 @@
 @extends('layouts.app', [
 'class' => '',
-'elementActive' => 'student'
+'elementActive' => 'attendance'
 ])
 
 @section('content')
@@ -11,52 +11,65 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col-8 user-font">
-                            <h3 class="mb-0">{{ __('Students') }}</h3>
+                            <h3 class="mb-0">{{ __('Time Table') }}</h3>
                         </div>
-                        @if (Auth::user()->can('student-create'))
+                        {{-- @if (Auth::user()->can('attendance_managements-create'))
                             <div class="col-4 text-right add-user">
-                                <a href="{{ route('student.create') }}" class="btn btn-sm btn-primary" id="add-user">{{
-                                    __('Add student') }}</a>
+                                <a href="{{ route('attendance_management.create') }}" class="btn btn-sm btn-primary" id="add-user">{{
+                                    __('Add Attendance') }}</a>
                             </div>
-                        @endif
+                        @endif --}}
                     </div>
                 </div>
                 @include('notification.index')
                 <div class="card-body">
+                    <form method="GET" action="{{ route('attendance_management.index') }}" class="mb-4 row g-3">
+                        <div class="col-md-3">
+                            <label for="date_from" class="form-label">Date From</label>
+                            <input type="date" name="date_from" id="date_from" value="{{ request('date_from') }}" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="date_to" class="form-label">Date To</label>
+                            <input type="date" name="date_to" id="date_to" value="{{ request('date_to') }}" class="form-control">
+                        </div>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary mr-2">Filter</button>
+                            <a href="{{ route('attendance_management.index') }}" class="btn btn-secondary">Reset</a>
+                        </div>
+                    </form>
+
                     <div class="table-responsive-sm">
                         <table class="table" id="tblData">
                             <thead>
                                 <tr>
+                                    <th hidden>#</th>
                                     <th>ID Number</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Middle Name</th>
-                                    <th>DOB</th>
-                                    <th>Sex</th>
-                                    <th>Course & Year Level</th>
+                                    <th>Name</th>
+                                    <th>Time In</th>
+                                    <th>Time Out</th>
+                                    <th>Date</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($students->count())
-                                    @foreach($students as $student)
+                                @if ($attendances->count())
+                                    @foreach($attendances as $attendance)
                                         <tr>
-                                            <td>{{ $student->idnumber }}</td>
-                                            <td>{{ $student->fn }}</td>
-                                            <td>{{ $student->ln }}</td>
-                                            <td>{{ $student->mn }}</td>
-                                            <td>{{ $student->dob }}</td>
-                                            <td>{{ $student->sex == "M" ? "Male" : "Female" }}</td>
-                                            <td>{{ $student->course ? $student->course->course_name.''.$student->course->year_level : '-' }}</td>
+                                            <td hidden>{{ $attendance->id }}</td>
+                                            <td>{{ $attendance->idnumber }}</td>
+                                            <td>{{ $attendance->name }}</td>
+                                            <td>{{ $attendance->time_in }}</td>
+                                            <td>{{ $attendance->time_out }}</td>
+                                            <td>{{ $attendance->created_date }}</td>
                                             <td>
-                                                 @if (Auth::user()->can('student-edit'))
-                                                    <a href="{{ route('student.edit', $student) }}" class="btn btn-info btn-sm">
+                                                 {{-- @if (Auth::user()->can('attendance_management-edit'))
+                                                    <a href="{{ route('attendance_management.edit', $attendance) }}" class="btn btn-info btn-sm">
                                                         <i class="fas fa-pen"></i>
                                                     </a>
-                                                @endif
-                                                @if (Auth::user()->can('student-delete'))
-                                                    <button type="button" data-id="{{$student->id}}"
-                                                    value="{{$student->idnumber. ' ' . $student->ln}}"
+                                                @endif --}}
+                                                @if (Auth::user()->can('attendance_management-delete'))
+                                                    <button type="button" data-id="{{$attendance->id}}"
+                                                    value="{{$attendance->idnumber. ' ' . $attendance->name}}"
                                                     class="btnCanDestroy btn btn-danger btn-sm"><i
                                                         class="fas fa-trash"></i>
                                                     </button>
@@ -91,7 +104,7 @@
                 showCancelButton: true,
             }).then((result) => {
                 if (result.value) {
-                    window.location.href = base_url + "/students/delete/" + $(this).data('id');
+                    window.location.href = base_url + "/attendance_managements/delete/" + $(this).data('id');
                     Swal.fire({
                         title: $(this).val() + ' Deleted Successfully',
                         icon: 'success',

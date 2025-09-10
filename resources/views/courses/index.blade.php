@@ -1,6 +1,6 @@
 @extends('layouts.app', [
 'class' => '',
-'elementActive' => 'student'
+'elementActive' => 'course'
 ])
 
 @section('content')
@@ -11,12 +11,12 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col-8 user-font">
-                            <h3 class="mb-0">{{ __('Students') }}</h3>
+                            <h3 class="mb-0">{{ __('Courses') }}</h3>
                         </div>
-                        @if (Auth::user()->can('student-create'))
+                        @if (Auth::user()->can('course-create'))
                             <div class="col-4 text-right add-user">
-                                <a href="{{ route('student.create') }}" class="btn btn-sm btn-primary" id="add-user">{{
-                                    __('Add student') }}</a>
+                                <a href="{{ route('course.create') }}" class="btn btn-sm btn-primary" id="add-user">{{
+                                    __('Add course') }}</a>
                             </div>
                         @endif
                     </div>
@@ -27,36 +27,30 @@
                         <table class="table" id="tblData">
                             <thead>
                                 <tr>
-                                    <th>ID Number</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Middle Name</th>
-                                    <th>DOB</th>
-                                    <th>Sex</th>
-                                    <th>Course & Year Level</th>
+                                    <th hidden>#</th>
+                                    <th>Course Name</th>
+                                    <th>Description</th>
+                                    <th>Year Level</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($students->count())
-                                    @foreach($students as $student)
+                                @if ($courses->count())
+                                    @foreach($courses as $course)
                                         <tr>
-                                            <td>{{ $student->idnumber }}</td>
-                                            <td>{{ $student->fn }}</td>
-                                            <td>{{ $student->ln }}</td>
-                                            <td>{{ $student->mn }}</td>
-                                            <td>{{ $student->dob }}</td>
-                                            <td>{{ $student->sex == "M" ? "Male" : "Female" }}</td>
-                                            <td>{{ $student->course ? $student->course->course_name.''.$student->course->year_level : '-' }}</td>
+                                            <td hidden>{{ $course->id }}</td>
+                                            <td>{{ $course->course_name }}</td>
+                                            <td>{{ $course->course_code }}</td>
+                                            <td>{{ $course->year_level }}</td>
                                             <td>
-                                                 @if (Auth::user()->can('student-edit'))
-                                                    <a href="{{ route('student.edit', $student) }}" class="btn btn-info btn-sm">
+                                                 @if (Auth::user()->can('course-edit'))
+                                                    <a href="{{ route('course.edit', $course) }}" class="btn btn-info btn-sm">
                                                         <i class="fas fa-pen"></i>
                                                     </a>
                                                 @endif
-                                                @if (Auth::user()->can('student-delete'))
-                                                    <button type="button" data-id="{{$student->id}}"
-                                                    value="{{$student->idnumber. ' ' . $student->ln}}"
+                                                @if (Auth::user()->can('course-delete'))
+                                                    <button type="button" data-id="{{$course->id}}"
+                                                    value="{{$course->course_name}}"
                                                     class="btnCanDestroy btn btn-danger btn-sm"><i
                                                         class="fas fa-trash"></i>
                                                     </button>
@@ -91,7 +85,7 @@
                 showCancelButton: true,
             }).then((result) => {
                 if (result.value) {
-                    window.location.href = base_url + "/students/delete/" + $(this).data('id');
+                    window.location.href = base_url + "/courses/delete/" + $(this).data('id');
                     Swal.fire({
                         title: $(this).val() + ' Deleted Successfully',
                         icon: 'success',
