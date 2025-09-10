@@ -45,10 +45,12 @@
                                             <td>{{ $student->ln }}</td>
                                             <td>{{ $student->mn }}</td>
                                             <td>{{ $student->dob }}</td>
-                                            <td>{{ $student->sex }}</td>
+                                            <td>{{ $student->sex == "M" ? "Male" : "Female" }}</td>
                                             <td>
                                                  @if (Auth::user()->can('student-edit'))
-                                                    <a href="{{ route('student.edit', $student) }}" class="btn btn-info btn-sm"><i class="fas fa-pen"></i></a>
+                                                    <a href="{{ route('student.edit', $student) }}" class="btn btn-info btn-sm">
+                                                        <i class="fas fa-pen"></i>
+                                                    </a>
                                                 @endif
                                                 @if (Auth::user()->can('student-delete'))
                                                     <button type="button" data-id="{{$student->id}}"

@@ -1,11 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\ActivityHeader;
-use App\Models\ActivityList;
-use App\Models\AnnouncementModel;
-use App\Models\Accomodation;
 use App\Models\IdPattern; 
+use App\Models\Attendance; 
 
 use Vinkla\Hashids\Facades\Hashids;
 
@@ -29,12 +26,12 @@ class HomeController extends Controller
     public function index()
     {
 
+        $logs = Attendance::where('created_date', today())->get();
         return view('pages.home',[
-            'headers' => ActivityHeader::getActivityHeader(),
-            'lists' => ActivityList::getActivityList(),
-            'announcements' => AnnouncementModel::getAnnouncement(),
-            'events' => AnnouncementModel::getAnnouncement(),
-            'patterns' => IdPattern::all()
+            'announcements' => null,
+            'events' => null,
+            'patterns' => IdPattern::all(),
+            'logs' => $logs
         ]);
     }
 

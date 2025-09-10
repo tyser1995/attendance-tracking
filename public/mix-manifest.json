@@ -17,6 +17,7 @@
     "/js/tinymce/models/dom/index.js": "/js/tinymce/models/dom/index.js",
     "/js/tinymce/models/dom/model.js": "/js/tinymce/models/dom/model.js",
     "/js/tinymce/models/dom/model.min.js": "/js/tinymce/models/dom/model.min.js",
+    "/js/tinymce/notices.txt": "/js/tinymce/notices.txt",
     "/js/tinymce/package.json": "/js/tinymce/package.json",
     "/js/tinymce/plugins/accordion/index.js": "/js/tinymce/plugins/accordion/index.js",
     "/js/tinymce/plugins/accordion/plugin.js": "/js/tinymce/plugins/accordion/plugin.js",

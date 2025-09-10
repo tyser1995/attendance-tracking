@@ -93,18 +93,10 @@ The above copyright notice and this permission notice shall be included in all c
 
 	<!-- <script src="{{ asset('js/html5-qrcode.min.js') }}"></script>
 	<script src="{{ asset('js/print.js') }}"></script> -->
-		<style>
-		body {
-			background-image: url("{{ asset('images/logo/main_bg.jpg') }}");
-			background-repeat: no-repeat;   /* Prevents tiling */
-			background-size: cover;        /* Stretches to fill screen */
-			background-position: center;   /* Centers the image */
-		}
-	</style>
 </head>
 
 <x-head.tinymce-config />
-<body class="hold-transition sidebar-mini layout-fixed {{ $class }}" >
+<body class="hold-transition sidebar-mini layout-fixed {{ $class }}">
 
     @auth()
         @include('layouts.page_templates.auth')

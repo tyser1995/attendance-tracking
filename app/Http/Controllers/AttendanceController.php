@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Attendance;
 use App\Models\IdPattern;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
@@ -19,25 +20,33 @@ class AttendanceController extends Controller
 
         $idnumber = $request->idnumber;
 
-        // ✅ Step 1: Validate ID against saved patterns
-        $patterns = IdPattern::all();
-        $isValid = false;
+        // $patterns = IdPattern::all();
+        // $isValid = false;
 
-        foreach ($patterns as $pattern) {
-            if (preg_match($pattern->regex, $idnumber)) {
-                $isValid = true;
-                break;
-            }
-        }
+        // foreach ($patterns as $pattern) {
+        //     if (preg_match($pattern->regex, $idnumber)) {
+        //         $isValid = true;
+        //         break;
+        //     }
+        // }
 
-        if (! $isValid) {
+        // if (! $isValid) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => "❌ ID '{$idnumber}' does not match any allowed pattern.",
+        //     ]);
+        // }
+
+        // Verify if student exists
+        $student = Student::where('idnumber', $idnumber)->first();
+
+        if (! $student) {
             return response()->json([
                 'success' => false,
-                'message' => "❌ ID '{$idnumber}' does not match any allowed pattern.",
+                'message' => "❌ No student account found with ID '{$idnumber}'.",
             ]);
         }
 
-        // ✅ Step 2: Proceed with attendance logging
         $name = "Employee " . $idnumber;
 
         $logsToday = Attendance::where('idnumber', $idnumber)
@@ -55,7 +64,7 @@ class AttendanceController extends Controller
 
         $attendance = Attendance::logAttendance(
             $idnumber,
-            $name,
+            $student->fn . ' ' . $student->ln,
             $nextStatus
         );
 
