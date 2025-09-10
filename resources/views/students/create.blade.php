@@ -56,7 +56,17 @@
                                     <option value="F" {{ old('sex') == 'F' ? 'selected' : '' }}>Female</option>
                                 </select>
                             </div>
-
+                            <div class="mb-3">
+                                <label>Course & Year</label>
+                                <select name="course_id" class="form-control" required>
+                                    <option value="" disabled selected>-- Select Course & Year --</option>
+                                    @foreach($courses as $course)
+                                        <option value="{{ $course->id }}" {{ old('course_id') == $course->id ? 'selected' : '' }}>
+                                            {{ $course->course_name }} ({{ $course->year_level }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="">
                                 <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
                             </div>

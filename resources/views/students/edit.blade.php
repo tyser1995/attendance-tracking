@@ -27,28 +27,51 @@
                         @csrf
                         @method('PUT')
 
-                        <label>ID Number</label>
-                        <input type="text" name="idnumber" class="form-control" value="{{ old('idnumber', $student->idnumber) }}" required>
-
-                        <label>First Name</label>
-                        <input type="text" name="fn" class="form-control" value="{{ old('fn', $student->fn) }}" required>
-
-                        <label>Last Name</label>
-                        <input type="text" name="ln" class="form-control" value="{{ old('ln', $student->ln) }}" required>
-
-                        <label>Middle Name</label>
-                        <input type="text" name="mn" class="form-control" value="{{ old('mn', $student->mn) }}">
-
-                        <label>Date of Birth</label>
-                        <input type="date" name="dob" class="form-control" value="{{ old('dob', $student->dob) }}" required>
-
-                        <label>Sex</label>
-                        <select name="sex" class="form-control" required>
-                            <option value="M" {{ old('sex', $student->sex) == 'M' ? 'selected' : '' }}>Male</option>
-                            <option value="F" {{ old('sex', $student->sex) == 'F' ? 'selected' : '' }}>Female</option>
-                        </select>
-
-                        <button type="submit" class="btn btn-success mt-4">Update</button>
+                        <h6 class="heading-small text-muted mb-4">{{ __('Student information') }}</h6>
+                        <div class="pl-lg-4">
+                            <div class="mb-3">
+                                <label>ID Number</label>
+                                <input type="text" name="idnumber" value="{{ old('idnumber', $student->idnumber) }}" class="form-control" placeholder="ID Number">
+                            </div>
+                            <div class="mb-3">
+                                <label>First Name</label>
+                                <input type="text" name="fn" value="{{ old('fn', $student->fn) }}"  class="form-control" placeholder="First Name">
+                            </div>
+                            <div class="mb-3">
+                                <label>Last Name</label>
+                               <input type="text" name="ln" value="{{ old('ln', $student->ln) }}"  class="form-control" placeholder="Last Name">
+                            </div>
+                            <div class="mb-3">
+                                <label>Middle Name</label>
+                                <input type="text" name="mn" value="{{ old('mn', $student->mn) }}"  class="form-control" placeholder="Middle Name">
+                            </div>
+                            <div class="mb-3">
+                                <label>Date of Birth</label>
+                                <input type="date" name="dob" value="{{ old('dob', $student->dob) }}" class="form-control" >
+                            </div>
+                            <div class="mb-3">
+                                <label>Sex</label>
+                                 <select name="sex" class="form-control" required>
+                                    <option value="">-- Select Sex --</option>
+                                    <option value="M" {{ old('sex', $student->sex ?? '') == 'M' ? 'selected' : '' }}>Male</option>
+                                    <option value="F" {{ old('sex', $student->sex ?? '') == 'F' ? 'selected' : '' }}>Female</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label>Course & Year</label>
+                                <select name="course_id" class="form-control" required>
+                                    <option value="" disabled selected>-- Select Course & Year --</option>
+                                    @foreach($courses as $course)
+                                        <option value="{{ $course->id }}" {{ old('course_id', $student->course_id) == $course->id ? 'selected' : '' }}>
+                                            {{ $course->course_name }} ({{ $course->year_level }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="">
+                                <button type="submit" class="btn btn-success mt-4">{{ __('Update') }}</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
