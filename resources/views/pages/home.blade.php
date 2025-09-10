@@ -3,16 +3,18 @@
 ])
 @section('content')
 <div class="row container-fluid time-attendance-page">
+    <div class="col-md-2">
+    </div>
     <!-- Left Column (Attendance Form + Logs) -->
-    <div class="col-md-5">
-        <div class="card">
+    <div class="col-md-8">
+        <div class="card" style="background: #ffffff78;">
             <div class="card-header text-center d-none">
                 <span class="h1"><b>RSG</b>-mAnoL</span>
             </div>
             <div class="card-body">
                 <div class="text-center">
                     <a href="{{ url('/home') }}">
-                        <img src="{{ asset('images/no_logo.png') }}" style="width:150px"  alt="nologo"/>
+                        <img src="{{ asset('images/logo/bg.jpg') }}" style="width:150px"  alt="nologo"/>
                     </a>
                     <p class="login-box-msg"></p>
                 </div>
@@ -42,7 +44,7 @@
                                 
                                 @forelse($logs as $log)
                                     <tr>
-                                        <td>{{ $log->id_number }}</td>
+                                        <td>{{ $log->idnumber }}</td>
                                         <td>{{ $log->name }}</td>
                                         <td>{{ \Carbon\Carbon::parse($log->created_at)->format('M d, Y h:i:s A') }}</td>
                                     </tr>
@@ -64,24 +66,18 @@
             </div>
         </div>
     </div>
-
+    <div class="col-md-2">
+    </div>
     <!-- Right Column (Announcements / Events) -->
-    <div class="col-md-7">
+
+    <div class="col-md-7 d-none">
         <div class="card">
             <div class="card-header bg-info text-white">
                 <h5 class="mb-0">📢 Announcements</h5>
             </div>
             <div class="card-body">
                 <ul class="list-unstyled">
-                    @forelse($announcements as $announcement)
-                        <li class="mb-3">
-                            <strong>{{ $announcement->title }}</strong><br>
-                            <small class="text-muted">{{ $announcement->created_at->format('M d, Y') }}</small>
-                            <p>{{ $announcement->body }}</p>
-                        </li>
-                    @empty
-                        <li>No announcements available</li>
-                    @endforelse
+                     <li>No announcements available</li>
                 </ul>
             </div>
         </div>
@@ -92,17 +88,7 @@
             </div>
             <div class="card-body">
                 <ul class="list-unstyled">
-                    @forelse($events as $event)
-                        <li class="mb-3">
-                            <strong>{{ $event->title }}</strong><br>
-                            <small class="text-muted">
-                                {{ \Carbon\Carbon::parse($event->event_date)->format('M d, Y h:i A') }}
-                            </small>
-                            <p>{{ $event->description }}</p>
-                        </li>
-                    @empty
-                        <li>No upcoming events</li>
-                    @endforelse
+                    <li>No upcoming events</li>
                 </ul>
             </div>
         </div>

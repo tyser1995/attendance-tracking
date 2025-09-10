@@ -23,32 +23,32 @@
                 </div>
                 <div class="card-body">
                     @include('notification.index')
-                    <form action="{{ route('students.update', $student->id) }}" method="POST">
+                    <form action="{{ route('student.update', $student->id) }}" method="POST">
                         @csrf
                         @method('PUT')
 
                         <label>ID Number</label>
-                        <input type="text" name="idnumber" value="{{ old('idnumber', $student->idnumber) }}" required>
+                        <input type="text" name="idnumber" class="form-control" value="{{ old('idnumber', $student->idnumber) }}" required>
 
                         <label>First Name</label>
-                        <input type="text" name="fn" value="{{ old('fn', $student->fn) }}" required>
+                        <input type="text" name="fn" class="form-control" value="{{ old('fn', $student->fn) }}" required>
 
                         <label>Last Name</label>
-                        <input type="text" name="ln" value="{{ old('ln', $student->ln) }}" required>
+                        <input type="text" name="ln" class="form-control" value="{{ old('ln', $student->ln) }}" required>
 
                         <label>Middle Name</label>
-                        <input type="text" name="mn" value="{{ old('mn', $student->mn) }}">
+                        <input type="text" name="mn" class="form-control" value="{{ old('mn', $student->mn) }}">
 
                         <label>Date of Birth</label>
-                        <input type="date" name="dob" value="{{ old('dob', $student->dob) }}" required>
+                        <input type="date" name="dob" class="form-control" value="{{ old('dob', $student->dob) }}" required>
 
                         <label>Sex</label>
-                        <select name="sex" required>
+                        <select name="sex" class="form-control" required>
                             <option value="M" {{ old('sex', $student->sex) == 'M' ? 'selected' : '' }}>Male</option>
                             <option value="F" {{ old('sex', $student->sex) == 'F' ? 'selected' : '' }}>Female</option>
                         </select>
 
-                        <button type="submit">Update</button>
+                        <button type="submit" class="btn btn-success mt-4">Update</button>
                     </form>
                 </div>
             </div>

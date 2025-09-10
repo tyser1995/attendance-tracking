@@ -6,11 +6,10 @@ use Illuminate\Support\Facades\Route;
 use Minishlink\WebPush\Subscription;
 use Minishlink\WebPush\WebPush;
 
-use App\Models\PushSubscription;
 use App\Models\User;
 use App\Models\Role;
-use App\Models\Announcement;
-use App\Models\BookingModel;
+// use App\Models\Announcement;
+// use App\Models\BookingModel;
 
 use App\Events\MyEvent;
 
@@ -55,8 +54,8 @@ class DashboardController extends Controller
         if (view()->exists("pages.dashboard")) {
             return view("pages.dashboard", [
                 'totals'        => $totals,
-                'subscriptions' => PushSubscription::all(),
-                'bookings'       => BookingModel::getBookingByEmail(Auth::user()->email)
+                //'subscriptions' => PushSubscription::all(),
+                //'bookings'       => BookingModel::getBookingByEmail(Auth::user()->email)
                 // 'announcement' => Announcement::orderBy('created_at','DESC')->get()
             ]);
         }
