@@ -18,4 +18,9 @@ class Student extends Model
         'dob',
         'sex',
     ];
+    
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
 }
