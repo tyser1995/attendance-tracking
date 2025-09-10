@@ -33,6 +33,7 @@
                                     <th>Middle Name</th>
                                     <th>DOB</th>
                                     <th>Sex</th>
+                                    <th>Course & Year Level</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -46,6 +47,7 @@
                                             <td>{{ $student->mn }}</td>
                                             <td>{{ $student->dob }}</td>
                                             <td>{{ $student->sex == "M" ? "Male" : "Female" }}</td>
+                                            <td>{{ $student->course ? $student->course->course_name.''.$student->course->year_level : '-' }}</td>
                                             <td>
                                                  @if (Auth::user()->can('student-edit'))
                                                     <a href="{{ route('student.edit', $student) }}" class="btn btn-info btn-sm">
