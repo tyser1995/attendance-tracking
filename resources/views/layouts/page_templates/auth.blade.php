@@ -87,6 +87,23 @@
 					</p>
 					</a>
 				</li>
+        <li class="nav-item {{ $elementActive == 'attendance' ? 'menu-open' : '' }}">
+					<a href="#" class="nav-link">
+					<i class="nav-icon fas fa-clock"></i>
+					<p>
+						Time Management
+						<i class="right fas fa-angle-left"></i>
+					</p>
+					</a>
+					<ul class="nav nav-treeview">
+						<li class="nav-item">
+						<a href="{{ route('attendance_managements') }}" class="nav-link {{ $elementActive == 'attendance' ? 'active' : '' }}">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Logs</p>
+							</a>
+						</li>
+					</ul>
+				</li>
 				<li class="nav-item {{ $elementActive == 'pattern' ? 'menu-open' : '' }}">
 					<a href="#" class="nav-link">
 					<i class="nav-icon fas fa-cogs"></i>
