@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\IdPattern; 
 use App\Models\Attendance; 
+use Illuminate\Support\Facades\Auth;
 
 use Vinkla\Hashids\Facades\Hashids;
 
@@ -25,6 +26,14 @@ class HomeController extends Controller
      */
     public function index()
     {
+
+        if (Auth::check()) {
+            Auth::logout();
+            return redirect('/');//->with('message', 'You have been logged out.');
+            //or
+            //return redirect('/dashboard'); // or whatever your dashboard route is
+        }
+
 
         $logs = Attendance::where('created_date', today())->get();
         return view('pages.home',[

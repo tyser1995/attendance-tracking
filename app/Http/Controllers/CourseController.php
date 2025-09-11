@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class CourseController extends Controller
 {
@@ -41,7 +42,15 @@ class CourseController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'course_name' => 'required|string|max:255',
-            'course_code' => 'required|string|max:255|unique:courses,course_code',
+            'course_code' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('courses')->where(function ($query) use ($request) {
+                    return $query->where('course_name', $request->course_name)
+                                ->where('year_level', $request->year_level);
+                }),
+            ],
             'year_level'  => 'required|integer',
         ]);
 
@@ -53,11 +62,7 @@ class CourseController extends Controller
                 ->with('error', $validator->errors()->first());
         }
 
-        $course = new Course();
-        $course->course_name = $request->course_name;
-        $course->course_code = $request->course_code;
-        $course->year_level  = $request->year_level;
-        $course->save();
+        Course::create($request->only('course_name', 'course_code', 'year_level'));
 
         return redirect()
             ->route('course.index')
@@ -100,7 +105,15 @@ class CourseController extends Controller
 
         $validator = Validator::make($request->all(), [
             'course_name' => 'required|string|max:255',
-            'course_code' => 'required|string|max:255|unique:courses,course_code,' . $course->id,
+            'course_code' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('courses')->ignore($course->id)->where(function ($query) use ($request) {
+                    return $query->where('course_name', $request->course_name)
+                                ->where('year_level', $request->year_level);
+                }),
+            ],
             'year_level'  => 'required|integer',
         ]);
 
@@ -112,10 +125,7 @@ class CourseController extends Controller
                 ->with('error', $validator->errors()->first());
         }
 
-        $course->course_name = $request->course_name;
-        $course->course_code = $request->course_code;
-        $course->year_level  = $request->year_level;
-        $course->save();
+        $course->update($request->only('course_name', 'course_code', 'year_level'));
 
         return redirect()
             ->route('course.index')
