@@ -27,12 +27,12 @@ class HomeController extends Controller
     public function index()
     {
 
-        if (Auth::check()) {
-            Auth::logout();
-            return redirect('/');//->with('message', 'You have been logged out.');
-            //or
-            //return redirect('/dashboard'); // or whatever your dashboard route is
-        }
+        // if (Auth::check()) {
+        //     Auth::logout();
+        //     return redirect('/');//->with('message', 'You have been logged out.');
+        //     //or
+        //     //return redirect('/dashboard'); // or whatever your dashboard route is
+        // }
 
 
         $logs = Attendance::where('created_date', today())->get();
