@@ -1,57 +1,50 @@
-## About Laravel
+# Attendance Tracking System
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+A Laravel-based web application for tracking user attendance via ID number input, with real-time logs and notifications.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Attendance Logging:** Users can log their attendance using their ID number.
+- **Real-Time Logs:** View attendance logs instantly after submission.
+- **User Authentication:** Registration, login, password reset, and email verification.
+- **Role & Permission Management:** Middleware and controllers for user roles and permissions.
+- **Profile Management:** Update user profiles and passwords.
+- **Notifications:** Email notifications for approvals and other events.
+- **Extensible:** Easily add courses, students, and patterns for ID validation.
 
-## Learning Laravel
+## UI & Copyright Notice
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+This project uses [AdminLTE](https://adminlte.io/) as its main dashboard and UI template.  
+**AdminLTE is an open source admin dashboard template licensed under the MIT License.**  
+See [AdminLTE License](https://github.com/ColorlibHQ/AdminLTE/blob/master/LICENSE) for details.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Folder Structure
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- `app/Console/Commands`: Custom Artisan commands.
+- `app/Events`: Application events.
+- `app/Exceptions`: Exception handling.
+- `app/Helpers`: Global helper functions.
+- `app/Http/Controllers`: Main controllers (Attendance, User, Auth, etc.).
+- `app/Http/Middleware`: Custom and default middleware.
+- `app/Http/Requests`: Form request validation.
+- `app/Mail`: Email notification classes.
+- `app/Models`: Eloquent models (Attendance, User, Student, etc.).
+- `app/Providers`: Service providers.
+- `app/Rules`: Custom validation rules.
+- `app/View/Components`: Blade components.
 
-## Laravel Sponsors
+## Getting Started
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Prerequisites
 
-### Premium Partners
+- PHP >= 7.3
+- Composer
+- Node.js & npm
+- MySQL or compatible database
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Installation
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/tyser1995/attendance-tracking.git
+   cd attendance-tracking
