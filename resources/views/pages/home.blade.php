@@ -167,6 +167,9 @@ $(document).ready(function () {
     });*/
 
     $('table tbody').empty();
+    $('table tbody').prepend(`<tr>
+            <td colspan="3">No logs found</td>
+    </tr>`);
     $('#idnumber').on('keypress', function(e) {
         if (e.which === 13) { // Enter key
             e.preventDefault();
@@ -232,7 +235,7 @@ $(document).ready(function () {
                 $(".notification-container .alert").fadeOut('slow', function () {
                     $(this).remove();
                     });
-                }, 3000);
+                }, 5000);
             }
         }
     });
