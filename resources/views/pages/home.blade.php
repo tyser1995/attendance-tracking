@@ -18,7 +18,7 @@
                     </a>
                     <p class="login-box-msg"></p>
                 </div>
-                @include('notification.index')
+                @include('notification.logs')
                 <form id="id-form" autocomplete="off">
                     @csrf
                     <div class="form-group">
@@ -166,7 +166,10 @@ $(document).ready(function () {
             }
     });*/
 
-
+    $('table tbody').empty();
+    $('table tbody').prepend(`<tr>
+            <td colspan="3">No logs found</td>
+    </tr>`);
     $('#idnumber').on('keypress', function(e) {
         if (e.which === 13) { // Enter key
             e.preventDefault();
@@ -183,9 +186,13 @@ $(document).ready(function () {
                     },
                     success: function(response) {
                         if (response.success) {
-                            $('#id-feedback')
-                                .text(response.message)
-                                .css('color', 'green');
+                            // Inject a success notification
+                            $('.notification-container').html(`
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    ${response.message}
+                                </div>
+                            `);
+
 
                             // clear old rows first
                             $('table tbody').empty();
@@ -202,9 +209,12 @@ $(document).ready(function () {
                             // clear input
                             $('#idnumber').val('');
                         } else {
-                            $('#id-feedback')
-                            .text(response.message)
-                            .css('color', 'red');
+                            // Inject an error notification
+                            $('.notification-container').html(`
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    ${response.message}
+                                </div>
+                            `);
                         }
 
                         setTimeout(function() {
@@ -214,11 +224,18 @@ $(document).ready(function () {
                         }, 5000);
                     },
                     error: function(xhr) {
-                        $('#id-feedback')
-                            .text('⚠ Something went wrong')
-                            .css('color', 'orange');
+                        $('.notification-container').html(`
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                ⚠ Something went wrong
+                            </div>
+                        `);
                     }
                 });
+                setTimeout(() => {
+                $(".notification-container .alert").fadeOut('slow', function () {
+                    $(this).remove();
+                    });
+                }, 5000);
             }
         }
     });
