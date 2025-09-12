@@ -63,6 +63,7 @@ extension=tokenizer
 extension=openssl
 extension=curl
 extension=fileinfo
+```
 
 ### 🔧 Installation
 
@@ -84,7 +85,7 @@ cp .env.example .env
 
 
 Update .env with your DB and mail settings:
-
+```
 APP_NAME="Attendance Tracking"
 APP_ENV=local
 APP_KEY=
@@ -97,7 +98,7 @@ DB_PORT=3306
 DB_DATABASE=attendance_db
 DB_USERNAME=root
 DB_PASSWORD=
-
+```
 
 ### Generate app key
 
@@ -114,9 +115,8 @@ php artisan migrate --seed
 php artisan serve
 
 
-Visit 👉 http://127.0.0.1:8000
+Visit 👉 [http://127.0.0.1:8000](http://127.0.0.1:8000/)
 
-```
 
 ### 👤 Default Admin Login
 
