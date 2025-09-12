@@ -1,57 +1,131 @@
-## About Laravel
+# Attendance Tracking System
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+A Laravel-based web application for tracking user attendance via ID number input, with real-time logs and notifications.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Attendance Logging:** Users can log their attendance using their ID number.
+- **Real-Time Logs:** View attendance logs instantly after submission.
+- **User Authentication:** Registration, login, password reset, and email verification.
+- **Role & Permission Management:** Middleware and controllers for user roles and permissions.
+- **Profile Management:** Update user profiles and passwords.
+- **Notifications:** Email notifications for approvals and other events.
+- **Extensible:** Easily add courses, students, and patterns for ID validation.
 
-## Learning Laravel
+## UI & Copyright Notice
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+This project uses [AdminLTE](https://adminlte.io/) as its main dashboard and UI template.  
+**AdminLTE is an open source admin dashboard template licensed under the MIT License.**  
+See [AdminLTE License](https://github.com/ColorlibHQ/AdminLTE/blob/master/LICENSE) for details.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 🚀 Features
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- ✅ **Attendance Logging** – Users log attendance with their ID number.  
+- ✅ **Time Tracking** – Logs `Time In` (AM/PM) and `Time Out` (AM/PM).  
+- ✅ **Real-Time Logs** – Instantly view attendance punches.  
+- ✅ **User Authentication** – Login, register, password reset, and email verification.  
+- ✅ **Role & Permission Management** – Control access by role (Admin, User, etc.).  
+- ✅ **Profile Management** – Users can update their profile and password.  
+- ✅ **Notifications** – Real-time and email-based notifications.  
+- ✅ **Extensible** – Add courses, students, and ID validation patterns.
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 📂 Folder Structure
 
-### Premium Partners
+- `app/Http/Controllers` → Attendance, Auth, and User controllers  
+- `app/Models` → Eloquent models (Attendance, Student, User, etc.)  
+- `app/Mail` → Email notifications  
+- `app/Rules` → Custom validation rules  
+- `resources/views` → Blade templates (AdminLTE UI)  
+- `routes/web.php` → Web routes  
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+---
 
-## Contributing
+## ⚙️ Requirements
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Make sure your system has:
 
-## Code of Conduct
+- **PHP** >= 8.0  
+- **Composer**  
+- **Node.js & npm**  
+- **MySQL/MariaDB**  
+- **Git**  
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Required PHP Extensions
+Enable these in `php.ini`:
+```ini
+extension=gmp
+extension=gd
+extension=pdo_mysql
+extension=mbstring
+extension=tokenizer
+extension=openssl
+extension=curl
+extension=fileinfo
+```
 
-## Security Vulnerabilities
+### 🔧 Installation
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Clone the repository
 
-## License
+git clone https://github.com/tyser1995/attendance-tracking.git
+cd attendance-tracking
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+### Install dependencies
+
+composer install
+npm install && npm run dev
+
+
+### Environment setup
+
+cp .env.example .env
+
+
+Update .env with your DB and mail settings:
+```
+APP_NAME="Attendance Tracking"
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://127.0.0.1:8000
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=attendance_db
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### Generate app key
+
+php artisan key:generate
+
+
+### Run migrations & seeders
+
+php artisan migrate --seed
+
+
+### Start the server
+
+php artisan serve
+
+
+Visit 👉 [http://127.0.0.1:8000](http://127.0.0.1:8000/)
+
+
+### 👤 Default Admin Login
+
+- **Email: admin@gmail.com
+- **Password: admin1234
+- **(Change this after login)
+
+### 🛠 Troubleshooting
+
+- **Missing PHP extensions → Enable them in php.ini.
+- **Node build errors → Delete node_modules then run npm install.
+- **Database issues → Ensure .env matches your DB credentials.
