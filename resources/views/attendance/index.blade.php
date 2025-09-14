@@ -62,11 +62,11 @@
                                             <td>{{ $attendance->time_out }}</td>
                                             <td>{{ $attendance->created_date }}</td>
                                             <td>
-                                                 {{-- @if (Auth::user()->can('attendance_management-edit'))
+                                                 @if (Auth::user()->can('attendance_management-edit'))
                                                     <a href="{{ route('attendance_management.edit', $attendance) }}" class="btn btn-info btn-sm">
                                                         <i class="fas fa-pen"></i>
                                                     </a>
-                                                @endif --}}
+                                                @endif
                                                 @if (Auth::user()->can('attendance_management-delete'))
                                                     <button type="button" data-id="{{$attendance->id}}"
                                                     value="{{$attendance->idnumber. ' ' . $attendance->name}}"

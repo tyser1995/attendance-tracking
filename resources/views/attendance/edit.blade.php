@@ -39,7 +39,11 @@
                             </div>
                             <div class="mb-3">
                                 <label>Time In</label>
-                               <input type="text" name="time_in" value="{{ old('time_in', $attendance->time_in) }}"  class="form-control" placeholder="Time In">
+                               <input type="time" name="time_in" value="{{ old('time_in', $attendance->time_in) }}"  class="form-control" placeholder="Time In">
+                            </div>
+                             <div class="mb-3">
+                                <label>Time Out</label>
+                               <input type="time" name="time_out" value="{{ old('time_out', $attendance->time_out) }}"  class="form-control" placeholder="Time Out">
                             </div>
                             <div class="">
                                 <button type="submit" class="btn btn-success mt-4">{{ __('Update') }}</button>

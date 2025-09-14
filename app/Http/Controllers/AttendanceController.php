@@ -145,7 +145,17 @@ class AttendanceController extends Controller
      */
     public function update(Request $request, $id)
     {
-         
+        $request->validate([
+            'time_in' => 'required|string',
+            'time_out' => 'nullable|string',
+        ]);
+
+        $attendance = Attendance::findOrFail($id);
+        $attendance->time_in = $request->time_in;
+        $attendance->time_out = $request->time_out;
+        $attendance->save();
+
+        return redirect()->route('attendance_managements')->withSuccess('Attendance updated successfully.' .$attendance->name);
     }
 
     /**
