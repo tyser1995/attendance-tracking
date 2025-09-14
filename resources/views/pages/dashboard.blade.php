@@ -52,7 +52,7 @@
                 <p>Attendance Logs</p>
                 </div>
                 <div class="icon">
-                    <i class="fas fa-hourglass"></i>
+                    <i class="fas fa-calendar-check"></i>
                 </div>
                 <a href="{{route('attendance_managements')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 <div class="small-box-footer">
