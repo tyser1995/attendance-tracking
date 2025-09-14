@@ -49,6 +49,15 @@
 					</p>
 					</a>
 				</li>
+        <li class="nav-item">
+          <a href="{{ route('dashboard') }}"
+              class="nav-link {{ $elementActive == 'dashboard' ? 'active' : '' }}">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                  Dashboard
+              </p>
+          </a>
+        </li>
         <li class="nav-item {{ $elementActive == 'user' || $elementActive == 'roles' || $elementActive == 'student' ? 'menu-open' : '' }}">
 					<a href="#" class="nav-link">
 					<i class="nav-icon fas fa-user-cog"></i>
@@ -131,7 +140,7 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
+        <div class="row mb-2 d-none">
           <div class="col-sm-6">
             <h1 class="m-0">Dashboard</h1>
           </div><!-- /.col -->
