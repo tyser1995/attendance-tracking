@@ -8,6 +8,7 @@ use Minishlink\WebPush\WebPush;
 
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Attendance;
 // use App\Models\Announcement;
 // use App\Models\BookingModel;
 
@@ -51,9 +52,14 @@ class DashboardController extends Controller
         //     $announcement_->delete();
         // }
 
+       $attendances = Attendance::where('created_date', today())
+        ->latest('id')
+        ->paginate(10);
+
         if (view()->exists("pages.dashboard")) {
             return view("pages.dashboard", [
                 'totals'        => $totals,
+                'attendances'   => $attendances,
                 //'subscriptions' => PushSubscription::all(),
                 //'bookings'       => BookingModel::getBookingByEmail(Auth::user()->email)
                 // 'announcement' => Announcement::orderBy('created_at','DESC')->get()
