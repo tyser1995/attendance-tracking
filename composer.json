@@ -65,6 +65,13 @@
         "post-install-cmd": [
             "php artisan clear-compiled",
             "chmod -R 777 public/"
+        ],
+
+       "backup-db": [
+            "php -r \"date_default_timezone_set('Asia/Manila'); echo shell_exec('\"C:\\\\xampp\\\\mysql\\\\bin\\\\mysqldump.exe\" -u root mysql_time_attendance > ' . __DIR__ . '/backup_' . date('Y-m-d_H-i-s') . '.sql');\""
+        ],
+        "start-dev": [
+            "composer backup-db"
         ]
     },
     "extra": {
