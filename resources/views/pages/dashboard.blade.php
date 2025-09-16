@@ -110,6 +110,57 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Today's Attendance</h4>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped mb-0">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th hidden>#</th>
+                                    <th>ID Number</th>
+                                    <th>Name</th>
+                                    <th>Time In</th>
+                                    <th>Time Out</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if ($attendances->count())
+                                    @foreach($attendances as $attendance)
+                                        <tr>
+                                            <td hidden>{{ $attendance->id }}</td>
+                                            <td>{{ $attendance->idnumber }}</td>
+                                            <td>{{ $attendance->name }}</td>
+                                            <td>{{ $attendance->time_in }}</td>
+                                            <td>{{ $attendance->time_out }}</td>
+                                            <td>{{ $attendance->created_date }}</td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr class="text-center">
+                                        <td colspan="6" class="py-4 text-muted">
+                                            {{ __('No Records found for today.') }}
+                                        </td>
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @if(method_exists($attendances, 'links'))
+                    <div class="card-footer d-flex justify-content-end">
+                        {{ $attendances->links('pagination::bootstrap-4') }}
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+
 </div>
 
 @endsection
