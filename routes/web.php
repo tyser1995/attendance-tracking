@@ -107,6 +107,9 @@ Route::group(['middleware' => 'auth'], function () {
      return redirect()->route('patterns')->with('status', '✅ Session works now!');
 });
 
+    //Dashboard
+    Route::post('/toggle-user-image', ['as' => 'toggle.user.image', 'uses' => 'App\Http\Controllers\DashboardController@toggleUserImage']);
+
     //Time Management
     Route::get('attendance_managements', ['as' => 'attendance_managements', 'uses' => 'App\Http\Controllers\AttendanceController@index']);
     Route::get('attendance_managements/delete/{id}', ['as' => 'attendance_managements/delete/{id}', 'uses' => 'App\Http\Controllers\AttendanceController@delete']);
