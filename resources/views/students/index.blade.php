@@ -43,7 +43,12 @@
                                         <tr>
                                             <td>{{ $student->idnumber }}</td>
                                             <td>{{ $student->ln }}</td>
-                                            <td>{{ $student->fn }}</td>
+                                            <td>
+                                                {{ $student->fn }}
+                                                @if(\Carbon\Carbon::parse($student->dob)->format('m-d') == now()->format('m-d'))
+                                                    <span class="badge badge-success">🎉 Today's Birthday</span>
+                                                @endif
+                                            </td>
                                             <td>{{ $student->mn }}</td>
                                             <td>{{ $student->dob }}</td>
                                             <td>{{ $student->sex == "M" ? "Male" : "Female" }}</td>
@@ -82,7 +87,7 @@
 <script>
     $(document).ready(function() {
         $('#tblData').DataTable({
-            "order": [[2, "asc"]], // Default sort by ID Number (first column)
+            "order": [[1, "asc"]], // Default sort by ID Number (first column)
             "language": {
                 "search": "Search Student:" // Custom label for search bar
             }
