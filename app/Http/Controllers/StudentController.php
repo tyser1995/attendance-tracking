@@ -19,7 +19,9 @@ class StudentController extends Controller
     {
         //
         return view('students.index', [
-            'students' => Student::with('course')->get()
+            'students' => Student::with('course')
+            ->orderBy('ln', 'asc')
+            ->get()
         ]);
     }
 

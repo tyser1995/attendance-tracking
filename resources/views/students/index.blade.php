@@ -81,7 +81,13 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
-    $('#tblData tbody').on('click','.btnCanDestroy',function() {
+        $('#tblData').DataTable({
+            "order": [[0, "asc"]], // Default sort by ID Number (first column)
+            "language": {
+                "search": "Search Student:" // Custom label for search bar
+            }
+        });
+        $('#tblData tbody').on('click','.btnCanDestroy',function() {
             Swal.fire({
                 // title: 'Error!',
                 text: 'Do you want to remove ' + $(this).val() + ' user?',
