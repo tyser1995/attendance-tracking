@@ -6,66 +6,82 @@
     <div class="col-md-2">
     </div>
     <!-- Left Column (Attendance Form + Logs) -->
-    <div class="col-md-8">
+   <div class="col-md-8">
         <div class="card" style="background: #ffffff78;">
             <div class="card-header text-center d-none">
                 <span class="h1"><b>RSG</b>-mAnoL</span>
             </div>
-            <div class="card-body">
-                <div class="text-center">
-                    <a href="{{ url('/home') }}">
-                        <img src="{{ asset('images/logo/bg.jpg') }}" style="width:150px"  alt="nologo"/>
-                    </a>
-                    <p class="login-box-msg"></p>
-                </div>
-                @include('notification.logs')
-                <form id="id-form" autocomplete="off">
-                    @csrf
-                    <div class="form-group">
-                        <label for="idnumber">ID Number</label>
-                        <input type="text" class="form-control" name="idnumber" id="idnumber" required autofocus>
-                        <small id="id-feedback" class="form-text"></small>
-                    </div>
-                </form>
 
-                <!-- User Logs Table -->
-                <div class="mt-4">
-                    <h5 class="text-left mb-3">Logs</h5>
-                    <div class="table-responsive">
-                        <table class="table table-sm table-bordered text-center">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>ID Number</th>
-                                    <th>Name</th>
-                                    <th>Time Punch</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                                @forelse($logs as $log)
-                                    <tr>
-                                        <td>{{ $log->idnumber }}</td>
-                                        <td>{{ $log->name }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($log->created_at)->format('M d, Y h:i:s A') }}</td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="3">No logs found</td>
-                                    </tr>
-                                @endforelse
-                               
-                            </tbody>
-                        </table>
+            <div class="card-body">
+                <div class="row">
+                    <!-- Left Column (Logo + Form + Logs) -->
+                    <div class="{{ Cookie::get('showUserImage', true) ? 'col-md-12' : 'col-md-8' }}">
+                        <div class="text-center mb-3">
+                            <a href="{{ url('/home') }}">
+                                <img src="{{ asset('images/logo/bg.jpg') }}" style="width:150px" alt="nologo"/>
+                            </a>
+                            <p class="login-box-msg"></p>
+                        </div>
+
+                        @include('notification.logs')
+
+                        <!-- Attendance Form -->
+                        <form id="id-form" autocomplete="off">
+                            @csrf
+                            <div class="form-group">
+                                <label for="idnumber">ID Number</label>
+                                <input type="text" class="form-control" name="idnumber" id="idnumber" required autofocus>
+                                <small id="id-feedback" class="form-text"></small>
+                            </div>
+                        </form>
+
+                        <!-- User Logs Table -->
+                        <div class="mt-4">
+                            <h5 class="text-left mb-3">Logs</h5>
+                            <div class="table-responsive">
+                                <table class="table table-sm table-bordered text-center">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>ID Number</th>
+                                            <th>Name</th>
+                                            <th>Time Punch</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse($logs as $log)
+                                            <tr>
+                                                <td>{{ $log->idnumber }}</td>
+                                                <td>{{ $log->name }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($log->created_at)->format('M d, Y h:i:s A') }}</td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="3">No logs found</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Right Column (User Image) -->
+                    <div class="col-md-4 d-flex justify-content-center mt-5 {{ Cookie::get('showUserImage', true) ? 'd-none' : '' }}">
+                    <img src="{{ asset('avatar/default-avatar.png') }}" 
+                        class="rounded border  {{ Cookie::get('showUserImage', true) ? 'd-none' : '' }}"
+                        alt="User Image"
+                        style="width:250px; height:300px; object-fit:cover;">
+                </div>
                 </div>
             </div>
 
             <!-- Date & Time Display -->
             <div class="card-footer text-left">
-              <p id="date-time" class="mb-0 fw-bold" style="font-size: 1.5rem; color: #000;"></p>
+                <p id="date-time" class="mb-0 fw-bold" style="font-size: 2.5rem; color: #000;"></p>
             </div>
         </div>
     </div>
+
     <div class="col-md-2">
     </div>
     <!-- Right Column (Announcements / Events) -->
@@ -241,21 +257,33 @@ $(document).ready(function () {
     });
 });
 
-function updateDateTime() {
+    function updateDateTime() {
         const now = new Date();
-        const options = {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
+        const options = { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric', 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit' 
         };
-        document.getElementById('date-time').innerText = now.toLocaleDateString('en-US', options);
+
+        // Format date and time
+        const formatted = now.toLocaleDateString('en-US', options);
+        const dateTimeEl = document.getElementById('date-time');
+        dateTimeEl.textContent = formatted;
+
+        // Change color if Sunday
+        if (now.getDay() === 0) {  // 0 = Sunday
+            dateTimeEl.style.color = 'red';
+        } else {
+            dateTimeEl.style.color = '#000';
+        }
     }
 
+    // Update every second
     setInterval(updateDateTime, 1000);
-    updateDateTime(); // run immediately on load
+    updateDateTime();
 </script>
 @endpush

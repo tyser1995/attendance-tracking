@@ -68,6 +68,28 @@
                 </div>
             </div>
         </div>
+         <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-primary">
+                <div class="inner text-center">
+                    <!-- Toggle Button -->
+                    <form id="toggleUserImageForm" method="POST" action="{{ route('toggle.user.image') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-light rounded-circle">
+                            @if (Cookie::get('showUserImage', true))
+                                <i class="fas fa-eye" style="font-size: 6.5rem"></i>
+                            @else
+                                <i class="fas fa-eye-slash" style="font-size: 6.5rem"></i>
+                            @endif
+                        </button>
+                        <span class="d-block mt-1 text-sm">
+                            {{ Cookie::get('showUserImage', true) ? 'Showing User Image' : 'Hiding User Image' }}
+                        </span>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <!-- Late Today -->
         <div class="col-lg-3 col-6 d-none">
             <div class="small-box bg-danger">
@@ -166,5 +188,31 @@
 @endsection
 @push('scripts')
 <script>
+    $('#toggleUserImageForm').on('submit', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: $(this).attr('action'),
+            method: 'POST',
+            data: {
+                _token: $('input[name="_token"]').val()
+            },
+            success: function (data) {
+                let imgContainer = $('#user-image-container');
+                let btnIcon = $('#toggleUserImageForm button i');
+                let btnLabel = $('#toggleUserImageForm small');
+
+                if (data.show_user_image) {
+                    imgContainer.removeClass('d-none');
+                    btnIcon.removeClass('fa-eye-slash').addClass('fa-eye');
+                    btnLabel.text('Showing User Image');
+                } else {
+                    imgContainer.addClass('d-none');
+                    btnIcon.removeClass('fa-eye').addClass('fa-eye-slash');
+                    btnLabel.text('Hiding User Image');
+                }
+            }
+        });
+    });
 </script>
 @endpush
