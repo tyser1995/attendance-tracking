@@ -28,8 +28,8 @@
                             <thead>
                                 <tr>
                                     <th>ID Number</th>
-                                    <th>First Name</th>
                                     <th>Last Name</th>
+                                    <th>First Name</th>
                                     <th>Middle Name</th>
                                     <th>DOB</th>
                                     <th>Sex</th>
@@ -42,8 +42,8 @@
                                     @foreach($students as $student)
                                         <tr>
                                             <td>{{ $student->idnumber }}</td>
-                                            <td>{{ $student->fn }}</td>
                                             <td>{{ $student->ln }}</td>
+                                            <td>{{ $student->fn }}</td>
                                             <td>{{ $student->mn }}</td>
                                             <td>{{ $student->dob }}</td>
                                             <td>{{ $student->sex == "M" ? "Male" : "Female" }}</td>
@@ -82,7 +82,7 @@
 <script>
     $(document).ready(function() {
         $('#tblData').DataTable({
-            "order": [[0, "asc"]], // Default sort by ID Number (first column)
+            "order": [[2, "asc"]], // Default sort by ID Number (first column)
             "language": {
                 "search": "Search Student:" // Custom label for search bar
             }
