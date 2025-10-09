@@ -37,4 +37,27 @@ class Attendance extends Model
             'created_date' => today(),
         ]);
     }
+
+    /**
+     * Relationship: Attendance → Student
+     */
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'idnumber', 'idnumber');
+    }
+
+    /**
+     * Relationship: Attendance → Course (through Student)
+     */
+    public function course()
+    {
+        return $this->hasOneThrough(
+            Course::class,
+            Student::class,
+            'idnumber',   // Foreign key on students table
+            'id',         // Foreign key on courses table
+            'idnumber',   // Local key on attendance table
+            'course_id'   // Local key on students table
+        );
+    }
 }

@@ -11,8 +11,9 @@ class AttendanceController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Attendance::query();
+                $query = Attendance::with(['student.course']); // eager load related student & course
 
+        // Filter by date range
         if ($request->filled('date_from') && $request->filled('date_to')) {
             $query->whereBetween('created_date', [$request->date_from, $request->date_to]);
         } elseif ($request->filled('date_from')) {
@@ -21,6 +22,7 @@ class AttendanceController extends Controller
             $query->whereDate('created_date', '<=', $request->date_to);
         }
 
+        // Sort latest first
         $attendances = $query->orderBy('created_date', 'desc')->get();
 
         return view('attendance.index', compact('attendances'));
@@ -89,12 +91,13 @@ class AttendanceController extends Controller
 
         $nextStatus = $lastLog ? $lastLog->status + 1 : 1;
 
-        if ($nextStatus > 4) {
-            return response()->json([
-                'success' => false,
-                'message' => '⚠ Already completed 4 logs for today',
-            ]);
-        }
+        // Prevent more than 4 logs per day
+        // if ($nextStatus > 4) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => '⚠ Already completed 4 logs for today',
+        //     ]);
+        // }
 
         $statusText = match($nextStatus) {
             1 => "AM Time In",

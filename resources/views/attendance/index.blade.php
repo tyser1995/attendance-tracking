@@ -46,7 +46,8 @@
                                     <th>ID Number</th>
                                     <th>Name</th>
                                     <th>Time In</th>
-                                    <th>Time Out</th>
+                                    <th>Course</th>
+                                    {{-- <th>Time Out</th> --}}
                                     <th>Date</th>
                                     <th>Actions</th>
                                 </tr>
@@ -59,7 +60,12 @@
                                             <td>{{ $attendance->idnumber }}</td>
                                             <td>{{ $attendance->name }}</td>
                                             <td>{{ $attendance->time_in }}</td>
-                                            <td>{{ $attendance->time_out }}</td>
+                                            <td>
+    {{ optional($attendance->student->course)->course_code 
+        ? optional($attendance->student->course)->course_code . '-' . optional($attendance->student->course)->year_level 
+        : '-' }}
+</td>
+                                            {{-- <td>{{ $attendance->time_out }}</td> --}}
                                             <td>{{ $attendance->created_date }}</td>
                                             <td>
                                                  @if (Auth::user()->can('attendance_management-edit'))
@@ -94,6 +100,54 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
+        var table = $('#tblData').DataTable({
+        responsive: true,
+        lengthChange: true,
+        autoWidth: false,
+        order: [[1, 'asc']], // Order by ID number
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                text: '<i class="fas fa-file-excel"></i> Export Excel',
+                className: 'btn btn-success btn-sm',
+                title: function() {
+                    // Add date filter info to filename
+                    const from = $('#date_from').val() || 'all';
+                    const to = $('#date_to').val() || 'all';
+                    return `Attendance_${from}_to_${to}`;
+                }
+            },
+            {
+                extend: 'csvHtml5',
+                text: '<i class="fas fa-file-csv"></i> Export CSV',
+                className: 'btn btn-info btn-sm'
+            },
+            {
+                extend: 'pdfHtml5',
+                text: '<i class="fas fa-file-pdf"></i> Export PDF',
+                className: 'btn btn-danger btn-sm',
+                orientation: 'landscape',
+                pageSize: 'A4',
+                title: 'Attendance Report'
+            },
+            {
+                extend: 'print',
+                text: '<i class="fas fa-print"></i> Print',
+                className: 'btn btn-primary btn-sm'
+            }
+        ],
+        language: {
+            search: "Search Attendance:",
+            lengthMenu: "Show _MENU_ records per page"
+        }
+    });
+
+    // Move export buttons to the top-right of your card
+    table.buttons().container()
+        .appendTo('#tblData_wrapper .col-md-6:eq(0)');
+
+    // Delete confirmation
     $('#tblData tbody').on('click','.btnCanDestroy',function() {
             Swal.fire({
                 // title: 'Error!',
