@@ -23,7 +23,9 @@ class AttendanceController extends Controller
         }
 
         // Sort latest first
-        $attendances = $query->orderBy('created_date', 'desc')->get();
+        $attendances = Attendance::with('student.course')
+        ->orderBy('created_date', 'desc')
+        ->get();
 
         return view('attendance.index', compact('attendances'));
     }

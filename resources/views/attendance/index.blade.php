@@ -60,10 +60,12 @@
                                             <td>{{ $attendance->idnumber }}</td>
                                             <td>{{ $attendance->name }}</td>
                                             <td>{{ $attendance->time_in }}</td>
-                                            <td>
-    {{ optional($attendance->student->course)->course_code 
-        ? optional($attendance->student->course)->course_code . '-' . optional($attendance->student->course)->year_level 
-        : '-' }}
+                                            @php
+    $course = optional(optional($attendance->student)->course);
+@endphp
+
+<td>
+    {{ $course->course_code ? $course->course_code . '-' . $course->year_level : '-' }}
 </td>
                                             {{-- <td>{{ $attendance->time_out }}</td> --}}
                                             <td>{{ $attendance->created_date }}</td>
