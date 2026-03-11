@@ -99,11 +99,18 @@ Route::group(['middleware' => 'auth'], function () {
     //ID pattern
     Route::get('/patterns', ['as' => 'patterns', 'uses' => 'App\Http\Controllers\IdPatternController@index']);
     Route::post('/validate-id', ['as' => 'validate-id', 'uses' => 'App\Http\Controllers\IdPatternController@validateId']);
+    Route::patch('/pattern/{id}/toggle', ['as' => 'pattern.toggle', 'uses' => 'App\Http\Controllers\IdPatternController@toggleStatus']);
+    Route::patch('/pattern/deactivate-all', ['as' => 'pattern.deactivateAll', 'uses' => 'App\Http\Controllers\IdPatternController@deactivateAll']);
+    Route::patch('/pattern/activate-all', ['as' => 'pattern.activateAll', 'uses' => 'App\Http\Controllers\IdPatternController@activateAll']);
+
     Route::resource('pattern', 'App\Http\Controllers\IdPatternController');
 
     Route::get('/session-test', function () {
      return redirect()->route('patterns')->with('status', '✅ Session works now!');
 });
+
+    //Dashboard
+    Route::post('/toggle-user-image', ['as' => 'toggle.user.image', 'uses' => 'App\Http\Controllers\DashboardController@toggleUserImage']);
 
     //Time Management
     Route::get('attendance_managements', ['as' => 'attendance_managements', 'uses' => 'App\Http\Controllers\AttendanceController@index']);

@@ -44,7 +44,7 @@ class IdPatternController extends Controller
         if ($exists) {
             return redirect()
                 ->route('patterns')
-                ->with('warning', '⚠️ Pattern already exists!');
+                ->withWarning('⚠️ Pattern already exists!');
         }
 
         // Insert if unique
@@ -55,7 +55,7 @@ class IdPatternController extends Controller
 
         return redirect()
             ->route('patterns')
-            ->with('status', '✅ Pattern added successfully!');
+            ->withSuccess('status', '✅ Pattern added successfully!');
     }
 
 
@@ -115,4 +115,40 @@ class IdPatternController extends Controller
         ->route('patterns')
         ->with('status', "🗑️ Pattern '{$pattern->pattern}' deleted successfully.");
     }
+
+    public function toggleStatus($id)
+    {
+        $pattern = IdPattern::findOrFail($id);
+
+        if ($pattern->status === 'active') {
+            // If already active → deactivate
+            $pattern->update(['status' => 'inactive']);
+        } else {
+            // If inactive → make it the only active one
+            $pattern->setActive();
+        }
+
+        return redirect()->back()->withSSuccess('Pattern status updated successfully.');
+    }
+
+    public function deactivateAll()
+    {
+        IdPattern::query()->update(['status' => 'inactive']);
+        return redirect()->back()->withSuccess('All patterns have been deactivated.');
+    }
+
+    public function activateAll()
+    {
+        IdPattern::query()->update(['status' => 'active']);
+        // // First deactivate everything
+        // IdPattern::query()->update(['status' => 'inactive']);
+        // // Activate the first one (or latest added)
+        // $first = IdPattern::first();
+        // if ($first) {
+        //     $first->update(['status' => 'active']);
+        // }
+
+        return redirect()->back()->withSuccess('All patterns have been activated.');
+    }
+
 }
