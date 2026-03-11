@@ -24,7 +24,7 @@ class IdPatternController extends Controller
    public function store(Request $request)
     {
         $request->validate([
-            'pattern' => 'required|string',
+            'pattern' => ['required', 'string', 'max:100', 'regex:/^[A-Za-z0-9#\-\/\s\.]+$/'],
         ]);
 
         // Convert any group of # into \d{N} dynamically

@@ -70,19 +70,21 @@ Route::get('checkout/{id}', ['as' => 'checkout/{id}', 'uses' => 'App\Http\Contro
 Route::post('checkout.process', ['as' => 'checkout.process', 'uses' => 'App\Http\Controllers\TransactionController@processPayment']);
 
 //Time Attendance
-Route::post('/attendance', ['as' => 'attendance', 'uses' => 'App\Http\Controllers\AttendanceController@store']);
+Route::post('/attendance', ['as' => 'attendance', 'uses' => 'App\Http\Controllers\AttendanceController@store'])->middleware('throttle:30,1');
 Route::get('/attendance/today', ['as' => 'attendance-today', 'uses' => 'App\Http\Controllers\AttendanceController@today']);
 Route::get('/attendance/{idnumber}', ['as' => 'attendance-by-employee', 'uses' => 'App\Http\Controllers\AttendanceController@byEmployee']);
 
 
-Route::get('user/{id}/avatar', function ($id) {
-    // Find the user
-    $user = App\Models\User::find(1);
+Route::middleware('auth')->get('user/{id}/avatar', function ($id) {
+    $user = App\Models\User::findOrFail($id);
 
-    // Return the image in the response with the correct MIME type
-    return response()->make($user->profile_photo, 200, array(
-        'Content-Type' => (new finfo(FILEINFO_MIME))->buffer($user->profile_photo)
-    ));
+    if (! $user->profile_photo) {
+        abort(404);
+    }
+
+    return response()->make($user->profile_photo, 200, [
+        'Content-Type' => (new finfo(FILEINFO_MIME))->buffer($user->profile_photo),
+    ]);
 });
 
 Route::post('/validate-id-log', ['as' => 'validate-id-log', 'uses' => 'App\Http\Controllers\IdPatternController@validateIdLog']);
@@ -232,9 +234,9 @@ Route::group(['middleware' => 'auth'], function () {
     
         $webPush = new WebPush([
             "VAPID" => [
-                "publicKey" => "BC5zel9JoqeOY2yVTJjDhiE1IisJTVHq-_p4rxC3zd60gQSqXzra_7_m7B12axwI42tZIUXYGXhIJ-t5MolKjNY",
-                "privateKey" => "YpOYF6OwLXH8PDW24E4Eu_kk7uOuSyApvC0NJhYNwa4",
-                "subject" => "http://127.0.0.1" //mailto:exampl@gmail.com
+                "publicKey" => env('VAPID_PUBLIC_KEY'),
+                "privateKey" => env('VAPID_PRIVATE_KEY'),
+                "subject" => env('VAPID_SUBJECT', env('APP_URL')),
             ]
         ]);
 
@@ -249,9 +251,9 @@ Route::group(['middleware' => 'auth'], function () {
     
         $webPush = new WebPush([
             "VAPID" => [
-                "publicKey" => "BC5zel9JoqeOY2yVTJjDhiE1IisJTVHq-_p4rxC3zd60gQSqXzra_7_m7B12axwI42tZIUXYGXhIJ-t5MolKjNY",
-                "privateKey" => "YpOYF6OwLXH8PDW24E4Eu_kk7uOuSyApvC0NJhYNwa4",
-                "subject" => "http://127.0.0.1" //mailto:exampl@gmail.com
+                "publicKey" => env('VAPID_PUBLIC_KEY'),
+                "privateKey" => env('VAPID_PRIVATE_KEY'),
+                "subject" => env('VAPID_SUBJECT', env('APP_URL')),
             ]
         ]);
         

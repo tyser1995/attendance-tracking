@@ -28,8 +28,8 @@
                             <thead>
                                 <tr>
                                     <th>ID Number</th>
-                                    <th>First Name</th>
                                     <th>Last Name</th>
+                                    <th>First Name</th>
                                     <th>Middle Name</th>
                                     <th>DOB</th>
                                     <th>Sex</th>
@@ -42,8 +42,13 @@
                                     @foreach($students as $student)
                                         <tr>
                                             <td>{{ $student->idnumber }}</td>
-                                            <td>{{ $student->fn }}</td>
                                             <td>{{ $student->ln }}</td>
+                                            <td>
+                                                {{ $student->fn }}
+                                                @if(\Carbon\Carbon::parse($student->dob)->format('m-d') == now()->format('m-d'))
+                                                    <span class="badge badge-success">🎉 Today's Birthday</span>
+                                                @endif
+                                            </td>
                                             <td>{{ $student->mn }}</td>
                                             <td>{{ $student->dob }}</td>
                                             <td>{{ $student->sex == "M" ? "Male" : "Female" }}</td>
@@ -81,7 +86,13 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
-    $('#tblData tbody').on('click','.btnCanDestroy',function() {
+        $('#tblData').DataTable({
+            "order": [[1, "asc"]], // Default sort by ID Number (first column)
+            "language": {
+                "search": "Search Student:" // Custom label for search bar
+            }
+        });
+        $('#tblData tbody').on('click','.btnCanDestroy',function() {
             Swal.fire({
                 // title: 'Error!',
                 text: 'Do you want to remove ' + $(this).val() + ' user?',

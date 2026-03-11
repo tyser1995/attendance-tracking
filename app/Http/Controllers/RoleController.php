@@ -31,15 +31,11 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = Role::orderBy('id','DESC')->get();
+        $roles = Role::with('permissions')->orderBy('id', 'DESC')->get();
 
-        $group_permissions = array();
-        foreach( $roles as $role ){
-            $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
-            ->where("role_has_permissions.role_id",$role->id)
-            ->get();
-
-            foreach($rolePermissions as $rp){
+        $group_permissions = [];
+        foreach ($roles as $role) {
+            foreach ($role->permissions as $rp) {
                 $module_name = explode("-", $rp->name);
                 $group_permissions[$role->id][$module_name[0]] = $module_name[0];
             }

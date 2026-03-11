@@ -19,7 +19,9 @@ class StudentController extends Controller
     {
         //
         return view('students.index', [
-            'students' => Student::with('course')->get()
+            'students' => Student::with('course')
+            ->orderBy('ln', 'asc')
+            ->get()
         ]);
     }
 
@@ -153,12 +155,13 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $student = Student::findOrFail($id);
+        $student->delete();
+        return redirect()->route('student.index')->withError('Deleted Successfully ' . $student->idnumber);
     }
 
-    public function delete($id){
-        $student = Student::findOrfail($id);
-        $student->delete();
-        return redirect()->route('student.index')->withError('Deleted Successfully ' .$student->idnumber);
+    public function delete($id)
+    {
+        return $this->destroy($id);
     }
 }

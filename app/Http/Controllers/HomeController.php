@@ -1,11 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\IdPattern; 
-use App\Models\Attendance; 
-use Illuminate\Support\Facades\Auth;
-
-use Vinkla\Hashids\Facades\Hashids;
+use App\Models\IdPattern;
+use App\Models\Attendance;
 
 class HomeController extends Controller
 {

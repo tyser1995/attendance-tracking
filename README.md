@@ -1,131 +1,150 @@
 # Attendance Tracking System
 
-A Laravel-based web application for tracking user attendance via ID number input, with real-time logs and notifications.
+A Laravel 8 web application for student attendance tracking via ID number input, with AM/PM time-in/time-out logging, course and student management, role-based access control, and an admin dashboard.
+
+## UI
+
+This project uses [AdminLTE](https://adminlte.io/) as its dashboard UI template, licensed under the [MIT License](https://github.com/ColorlibHQ/AdminLTE/blob/master/LICENSE).
+
+---
 
 ## Features
 
-- **Attendance Logging:** Users can log their attendance using their ID number.
-- **Real-Time Logs:** View attendance logs instantly after submission.
-- **User Authentication:** Registration, login, password reset, and email verification.
-- **Role & Permission Management:** Middleware and controllers for user roles and permissions.
-- **Profile Management:** Update user profiles and passwords.
-- **Notifications:** Email notifications for approvals and other events.
-- **Extensible:** Easily add courses, students, and patterns for ID validation.
-
-## UI & Copyright Notice
-
-This project uses [AdminLTE](https://adminlte.io/) as its main dashboard and UI template.  
-**AdminLTE is an open source admin dashboard template licensed under the MIT License.**  
-See [AdminLTE License](https://github.com/ColorlibHQ/AdminLTE/blob/master/LICENSE) for details.
-
-## 🚀 Features
-
-- ✅ **Attendance Logging** – Users log attendance with their ID number.  
-- ✅ **Time Tracking** – Logs `Time In` (AM/PM) and `Time Out` (AM/PM).  
-- ✅ **Real-Time Logs** – Instantly view attendance punches.  
-- ✅ **User Authentication** – Login, register, password reset, and email verification.  
-- ✅ **Role & Permission Management** – Control access by role (Admin, User, etc.).  
-- ✅ **Profile Management** – Users can update their profile and password.  
-- ✅ **Notifications** – Real-time and email-based notifications.  
-- ✅ **Extensible** – Add courses, students, and ID validation patterns.
+- **Attendance Logging** — Students log attendance by entering their ID number; supports AM Time In, AM Time Out, PM Time In, PM Time Out (max 4 logs/day)
+- **ID Pattern Validation** — Configurable regex patterns to validate ID number formats before logging
+- **Student Management** — CRUD for students with course assignment
+- **Course Management** — CRUD for courses with year level
+- **Role & Permission Management** — Granular access control via Spatie Permission
+- **User Management** — Create and manage admin/staff accounts
+- **Export** — Export attendance records to Excel, CSV, and PDF
+- **Booking System** — Manage accommodations, day tours, and place reservations
+- **Survey & Feedback** — Collect and review survey responses
+- **Volunteer Management** — Register and approve volunteers
+- **Announcements** — Post announcements visible on the public page
+- **Reports & Charts** — Visual reports for bookings, demographics, and feedback
+- **Price Monitoring** — Track commodity prices
+- **Point of Sale** — Basic POS item management
+- **QR Code Generator** — Generate and verify QR codes
 
 ---
 
-## 📂 Folder Structure
+## Requirements
 
-- `app/Http/Controllers` → Attendance, Auth, and User controllers  
-- `app/Models` → Eloquent models (Attendance, Student, User, etc.)  
-- `app/Mail` → Email notifications  
-- `app/Rules` → Custom validation rules  
-- `resources/views` → Blade templates (AdminLTE UI)  
-- `routes/web.php` → Web routes  
-
----
-
-## ⚙️ Requirements
-
-Make sure your system has:
-
-- **PHP** >= 8.0  
-- **Composer**  
-- **Node.js & npm**  
-- **MySQL/MariaDB**  
-- **Git**  
+- **PHP** >= 8.0
+- **Composer**
+- **Node.js & npm**
+- **MySQL** >= 5.7
 
 ### Required PHP Extensions
-Enable these in `php.ini`:
+
+Enable in `php.ini`:
+
 ```ini
-extension=gmp
 extension=gd
 extension=pdo_mysql
 extension=mbstring
-extension=tokenizer
 extension=openssl
 extension=curl
 extension=fileinfo
+extension=gmp
 ```
 
-### 🔧 Installation
+---
 
-### Clone the repository
+## Installation
 
+### 1. Clone the repository
+
+```bash
 git clone https://github.com/tyser1995/attendance-tracking.git
 cd attendance-tracking
+```
 
+### 2. Install dependencies
 
-### Install dependencies
-
+```bash
 composer install
 npm install && npm run dev
-
-
-### Environment setup
-
-cp .env.example .env
-
-
-Update .env with your DB and mail settings:
 ```
+
+### 3. Environment setup
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` with your database credentials:
+
+```env
 APP_NAME="Attendance Tracking"
 APP_ENV=local
-APP_KEY=
-APP_DEBUG=true
+APP_DEBUG=false
 APP_URL=http://127.0.0.1:8000
 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=attendance_db
+DB_DATABASE=your_database_name
 DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-### Generate app key
+### 4. Generate app key
 
+```bash
 php artisan key:generate
+```
 
+### 5. Run migrations and seeders
 
-### Run migrations & seeders
-
+```bash
 php artisan migrate --seed
+```
 
+### 6. Start the server
 
-### Start the server
-
+```bash
 php artisan serve
+```
 
+Visit → [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
-Visit 👉 [http://127.0.0.1:8000](http://127.0.0.1:8000/)
+---
 
+## Default Login Credentials
 
-### 👤 Default Admin Login
+| Role        | Email                   | Password       |
+|-------------|-------------------------|----------------|
+| Super Admin | superadmin@gmail.com    | SuperAdmin1234 |
+| Admin       | admin@gmail.com         | admin1234      |
 
-- **Email: admin@gmail.com
-- **Password: admin1234
-- **(Change this after login)
+> Change these passwords immediately after first login.
 
-### 🛠 Troubleshooting
+---
 
-- **Missing PHP extensions → Enable them in php.ini.
-- **Node build errors → Delete node_modules then run npm install.
-- **Database issues → Ensure .env matches your DB credentials.
+## Project Structure
+
+```
+app/
+├── Http/Controllers/     — Attendance, Student, Course, User, Role controllers
+├── Models/               — Eloquent models (Attendance, Student, Course, User, etc.)
+├── Helpers/              — GlobalHelper utility
+database/
+├── migrations/           — All table migrations
+├── seeders/              — Role, Permission, and Admin user seeders
+resources/views/          — Blade templates (AdminLTE)
+routes/
+└── web.php               — All web routes
+```
+
+---
+
+## Troubleshooting
+
+| Problem | Fix |
+|---|---|
+| Missing PHP extensions | Enable them in `php.ini` and restart your server |
+| `No application encryption key` | Run `php artisan key:generate` |
+| `Unknown database` error | Create the database first, then run `php artisan migrate` |
+| Node build errors | Delete `node_modules/` and re-run `npm install` |
+| Blank page / 500 error | Check `storage/logs/laravel.log` for details |

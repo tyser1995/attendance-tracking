@@ -202,35 +202,25 @@ $(document).ready(function () {
                     },
                     success: function(response) {
                         if (response.success) {
-                            // Inject a success notification
-                            $('.notification-container').html(`
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    ${response.message}
-                                </div>
-                            `);
-
+                            // Inject a success notification (use .text() to prevent XSS)
+                            let $successAlert = $('<div class="alert alert-success alert-dismissible fade show" role="alert">').text(response.message);
+                            $('.notification-container').html($successAlert);
 
                             // clear old rows first
                             $('table tbody').empty();
-                            // append new log to table
-                            let newRow = `
-                                <tr>
-                                    <td>${response.data.idnumber}</td>
-                                    <td>${response.data.name}</td>
-                                    <td>${response.data.time_in ?? response.data.time_out}</td>
-                                </tr>
-                            `;
-                            $('table tbody').prepend(newRow);
+                            // append new log to table using DOM methods to prevent XSS
+                            let $newRow = $('<tr>');
+                            $('<td>').text(response.data.idnumber).appendTo($newRow);
+                            $('<td>').text(response.data.name).appendTo($newRow);
+                            $('<td>').text(response.data.time_in ?? response.data.time_out).appendTo($newRow);
+                            $('table tbody').prepend($newRow);
 
                             // clear input
                             $('#idnumber').val('');
                         } else {
-                            // Inject an error notification
-                            $('.notification-container').html(`
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    ${response.message}
-                                </div>
-                            `);
+                            // Inject an error notification (use .text() to prevent XSS)
+                            let $errorAlert = $('<div class="alert alert-danger alert-dismissible fade show" role="alert">').text(response.message);
+                            $('.notification-container').html($errorAlert);
                         }
 
                         setTimeout(function() {
