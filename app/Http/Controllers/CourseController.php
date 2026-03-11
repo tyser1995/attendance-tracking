@@ -138,14 +138,15 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
+    public function destroy($id)
     {
-        //
+        $course = Course::findOrFail($id);
+        $course->delete();
+        return redirect()->route('course.index')->withError('Deleted Successfully ' . $course->course_name);
     }
 
-    public function delete($id){
-        $course = Course::findOrfail($id);
-        $course->delete();
-        return redirect()->route('course.index')->withError('Deleted Successfully ' .$course->course_name);
+    public function delete($id)
+    {
+        return $this->destroy($id);
     }
 }

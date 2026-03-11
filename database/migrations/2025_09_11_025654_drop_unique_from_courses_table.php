@@ -14,9 +14,7 @@ class DropUniqueFromCoursesTable extends Migration
     public function up()
     {
         Schema::table('courses', function (Blueprint $table) {
-            Schema::table('courses', function (Blueprint $table) {
-                $table->dropUnique(['course_code']); // drop unique index
-            });
+            $table->dropUnique(['course_code']);
         });
     }
 

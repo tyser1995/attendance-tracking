@@ -15,8 +15,6 @@ use Spatie\Permission\Models\Role;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
-use Intervention\Image\Facades\Image as Image;
-
 use DB;
 
 class UserController extends Controller
@@ -120,10 +118,8 @@ class UserController extends Controller
 
                 $user->save();
 
-                DB::table('model_has_roles')->where('model_id',$user->id)->delete();
-
-                $role = Role::where('id', $request->input('role'))->first();
-                $user->assignRole($role);
+                $role = Role::find($request->input('role'));
+                $user->syncRoles($role);
 
                 return redirect()->route('user.index')->withStatus(__('User successfully updated.'));
 
@@ -158,7 +154,7 @@ class UserController extends Controller
     }
 
     public function delete($id){
-        $user = User::findOrfail($id);
+        $user = User::findOrFail($id);
         //$user->deleted_flag = 1;
         $user->delete();
         return redirect()->route('user.index')->withError('Deleted Successfully ' .$user->name);
@@ -193,7 +189,7 @@ class UserController extends Controller
     }
 
     public function verify_user($id){
-        $user = User::findOrfail($id);
+        $user = User::findOrFail($id);
         $user->email_verified_at = now();
         $user->update();
         return redirect()->route('user.index')->withStatus('Verified Successfully ' .$user->name);

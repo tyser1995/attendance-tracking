@@ -11,7 +11,7 @@ class AttendanceController extends Controller
 {
     public function index(Request $request)
     {
-                $query = Attendance::with(['student.course']); // eager load related student & course
+        $query = Attendance::with(['student.course']);
 
         // Filter by date range
         if ($request->filled('date_from') && $request->filled('date_to')) {
@@ -22,10 +22,7 @@ class AttendanceController extends Controller
             $query->whereDate('created_date', '<=', $request->date_to);
         }
 
-        // Sort latest first
-        $attendances = Attendance::with('student.course')
-        ->orderBy('created_date', 'desc')
-        ->get();
+        $attendances = $query->orderBy('created_date', 'desc')->get();
 
         return view('attendance.index', compact('attendances'));
     }
@@ -49,32 +46,26 @@ class AttendanceController extends Controller
 
         $idnumber = $request->idnumber;
 
-        // $patterns = IdPattern::all();
-        // $isValid = false;
+        $patterns = IdPattern::all();
+        if ($patterns->isNotEmpty()) {
+            $isValid = false;
+            foreach ($patterns as $pattern) {
+                if (preg_match($pattern->regex, $idnumber)) {
+                    $isValid = true;
+                    break;
+                }
+            }
 
-        // foreach ($patterns as $pattern) {
-        //     if (preg_match($pattern->regex, $idnumber)) {
-        //         $isValid = true;
-        //         break;
-        //     }
-        // }
-
-        // if (! $isValid) {
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => "❌ ID '{$idnumber}' does not match any allowed pattern.",
-        //     ]);
-        // }
+            if (! $isValid) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "❌ ID '{$idnumber}' does not match any allowed pattern.",
+                ]);
+            }
+        }
 
         // Verify if student exists
         $student = Student::where('idnumber', $idnumber)->first();
-
-        if (! $student) {
-            return response()->json([
-                'success' => false,
-                'message' => "❌ No student account found with ID '{$idnumber}'.",
-            ]);
-        }
 
         if (! $student) {
             return response()->json([
@@ -94,12 +85,12 @@ class AttendanceController extends Controller
         $nextStatus = $lastLog ? $lastLog->status + 1 : 1;
 
         // Prevent more than 4 logs per day
-        // if ($nextStatus > 4) {
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => '⚠ Already completed 4 logs for today',
-        //     ]);
-        // }
+        if ($nextStatus > 4) {
+            return response()->json([
+                'success' => false,
+                'message' => '⚠ Already completed 4 logs for today',
+            ]);
+        }
 
         $statusText = match($nextStatus) {
             1 => "AM Time In",
@@ -151,8 +142,8 @@ class AttendanceController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'time_in' => 'required|string',
-            'time_out' => 'nullable|string',
+            'time_in'  => 'required|date_format:H:i:s',
+            'time_out' => 'nullable|date_format:H:i:s|after:time_in',
         ]);
 
         $attendance = Attendance::findOrFail($id);
@@ -171,13 +162,14 @@ class AttendanceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $attendance = Attendance::findOrFail($id);
+        $attendance->delete();
+        return redirect()->route('attendance_managements')->withError('Deleted Successfully ' . $attendance->name);
     }
 
-    public function delete($id){
-        $attendance = Attendance::findOrfail($id);
-        $attendance->delete();
-        return redirect()->route('attendance_managements')->withError('Deleted Successfully ' .$attendance->name);
+    public function delete($id)
+    {
+        return $this->destroy($id);
     }
 
     /**
