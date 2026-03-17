@@ -17,13 +17,15 @@ class CreateAdminUserSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::create([
+       $user = User::create([
             'name' => 'Super Admin',
             'email' => 'superadmin@gmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('SuperAdmin1234'),
             'role' => 1,
             'status' => 'Active',
+            // added default profile_photo to satisfy NOT NULL constraint
+            'profile_photo' => 'default.png',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -35,6 +37,8 @@ class CreateAdminUserSeeder extends Seeder
             'password' => Hash::make('admin1234'),
             'role' => 2,
             'status' => 'Active',
+            // added default profile_photo to satisfy NOT NULL constraint
+            'profile_photo' => 'default.png',
             'created_at' => now(),
             'updated_at' => now()
         ]);
